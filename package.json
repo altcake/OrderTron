@@ -1,0 +1,23 @@
+{
+  "name": "ordertron",
+  "version": "1.0.0",
+  "description": "Restoring absolute tranquility",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ara Malayan",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^2.8.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.7.0",
+    "exiftool-vendored": "^15.2.0",
+    "merge-images": "^2.0.0",
+    "node-cron": "^3.0.0",
+    "node-fetch": "^2.6.1",
+    "syno": "^2.2.0",
+    "twitter-api-v2": "^1.3.0"
+  }
+}
