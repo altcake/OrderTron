@@ -5,4 +5,4 @@ npm-debug.log
 .DS_Store
 content
 .vscode
-commands/training.js*
+src/commands/training.js*
