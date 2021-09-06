@@ -3,7 +3,7 @@ const fs = require('fs')
 const mergeImages = require('merge-images')
 const { Canvas, Image } = require('canvas')
 
-const brazzers = './content/images/image-merge/Brazzers-01.png'
+const brazzers = './content/images/image-merge/logo.png'
 
 const incomingImages = []
 const outgoingImages = []

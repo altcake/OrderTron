@@ -5,7 +5,7 @@ require('dotenv').config()
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"] })
 client.commands = new Discord.Collection()
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'))
+const commandFiles = fs.readdirSync('./src/commands/').filter(file => file.endsWith('.js'))
 for(const file of commandFiles) {
     const command = require(`./commands/${file}`)
     client.commands.set(command.name, command)
@@ -13,7 +13,7 @@ for(const file of commandFiles) {
 
 const prefix = '~'
 
-client.once('ready', async() => {
+client.on('ready', async() => {
     console.log('Main.js: Fear not citizen, justice is here.')
     client.user.setActivity("Type ~help for commands")
     //let files = await client.commands.get('training').initialize()
