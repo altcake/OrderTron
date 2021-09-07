@@ -4,7 +4,7 @@
   "description": "Restoring absolute tranquility",
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_PATH=src/ node main.js",
+    "start": "NODE_PATH=src/ node src/main.js",
     "test": "jest"
   },
   "author": "Ara Malayan",
