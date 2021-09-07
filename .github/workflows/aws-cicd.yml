@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         node-version: ['16.x']
-        appname: ['ordertron']
+        appname: ['ordertron-codedeploy']
         deploy-group: ['prod']
         s3-bucket: ['ordertron-bucket']
         s3-filename: ['ordertron-codedeploy-${{ github.sha }}']
