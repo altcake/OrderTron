@@ -1,2 +1,2 @@
 #!/bin/bash
-killall -q node
+if pgrep node; then pkill node; fi
