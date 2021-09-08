@@ -11,6 +11,7 @@ let twitterUserMap = new Map()
 twitterUserMap['mondayDoggy'] = "1386691472754462725"
 twitterUserMap['fridayYakuza'] = "1165068053786312704"
 twitterUserMap['fridayKiller7'] = "1213846076534341638"
+twitterUserMap['fridayLynch'] = "1355278398571106306"
 twitterUserMap['thursdayOOT'] = "1230723636769644544"
 twitterUserMap['wednesdayWii'] = "1333567603093200898"
 twitterUserMap['thursdayFeliz'] = "1304044685351059459"
@@ -48,7 +49,9 @@ async function thursday() {
 async function fridayMorning() {
     console.log("It's Friday (morning)!!!")
     const TweetLink1 = await getLatestTweet(twitterUserMap['fridayYakuza'])
+    const TweetLink2 = await getLatestTweet(twitterUserMap['fridayLynch'])
     client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
+    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink2)
 }
 
 async function fridayAfternoon() {

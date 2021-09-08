@@ -104,10 +104,6 @@ module.exports = {
             console.log("BROTHER CHECK")
             message.channel.send({ files: [brotherCheck] })
         }
-        if(message.channel.guild == serverMap['OCB'] && message.content.toLowerCase().includes('metal gear')) {
-            console.log("METAL GEAR")
-            message.channel.send("https://www.youtube.com/watch?v=iTQ8YtCiMoI")
-        }
         if((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
             console.log("GOT DAMN")
             let number = Math.random()
