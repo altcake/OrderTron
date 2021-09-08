@@ -1,6 +1,6 @@
 {
   "name": "ordertron",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Restoring absolute tranquility",
   "main": "src/main.js",
   "scripts": {
