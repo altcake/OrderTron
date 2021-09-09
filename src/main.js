@@ -15,7 +15,7 @@ const prefix = '~'
 
 client.on('ready', async() => {
     console.log('Main.js: Fear not citizen, justice is here.')
-    client.user.setActivity("Type ~help for commands")
+    client.user.setActivity(`Type ${prefix}help for commands`)
     //let files = await client.commands.get('training').initialize()
 })
 
