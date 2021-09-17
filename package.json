@@ -19,9 +19,10 @@
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
     "syno": "^2.2.0",
-    "twitter-api-v2": "^1.4.1"
+    "twitter-api-v2": "^1.4.1",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
-    "jest": "^27.1.0"
+    "jest": "^27.2.0"
   }
 }
