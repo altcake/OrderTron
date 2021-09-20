@@ -1,0 +1,17 @@
+**/node_modules/
+**/.git
+**/.github
+**/scripts
+**/README.md
+**/LICENSE
+**/.vscode
+**/npm-debug.log
+**/coverage
+**/.env
+**/.editorconfig
+**/.aws
+**/dist
+**/src/commands/merge.js*
+**/src/commands/training.js*
+**/appspec.yml
+**/ecosystem.config.js
