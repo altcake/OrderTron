@@ -15,35 +15,37 @@ userMap["an1"] = process.env.USER_AN1
 userMap["jo1"] = process.env.USER_JO1
 userMap["ju1"] = process.env.USER_JU1
 
-const bigOof = new MessageAttachment('./content/images/oof.jpg')
-const white = new MessageAttachment('./content/images/white.jpg')
-const suavemente = new MessageAttachment('./content/images/suavemente.jpg')
-const whoops_white = new MessageAttachment('./content/images/whoops_white.jpg')
-const brotherCheck = new MessageAttachment('./content/images/brother.jpg')
-const gotDamn = new MessageAttachment('./content/images/damn.jpg')
+const contentDir = process.env.CONTENT_DIR
 
-const letsGoList = fs.readdirSync('./content/images/lets_go/')
+const bigOof = new MessageAttachment(`${contentDir}/images/oof.jpg`)
+const white = new MessageAttachment(`${contentDir}/images/white.jpg`)
+const suavemente = new MessageAttachment(`${contentDir}/images/suavemente.jpg`)
+const whoops_white = new MessageAttachment(`${contentDir}/images/whoops_white.jpg`)
+const brotherCheck = new MessageAttachment(`${contentDir}/images/brother.jpg`)
+const gotDamn = new MessageAttachment(`${contentDir}/images/damn.jpg`)
+
+const letsGoList = fs.readdirSync(`${contentDir}/images/lets_go/`)
 let letsGoFiles = []
 for(const file of letsGoList) {
-    letsGoFiles.push(`./content/images/lets_go/${file}`)
+    letsGoFiles.push(`${contentDir}/images/lets_go/${file}`)
 }
 
-const boobaList = fs.readdirSync('./content/images/booba/')
+const boobaList = fs.readdirSync(`${contentDir}/images/booba/`)
 let boobaFiles = []
 for(const file of boobaList) {
-    boobaFiles.push(`./content/images/booba/${file}`)
+    boobaFiles.push(`${contentDir}/images/booba/${file}`)
 }
 
-const spyroList = fs.readdirSync('./content/images/spyro/')
+const spyroList = fs.readdirSync(`${contentDir}/images/spyro/`)
 let spyroFiles = []
 for(const file of spyroList) {
-    spyroFiles.push(`./content/images/spyro/${file}`)
+    spyroFiles.push(`${contentDir}/images/spyro/${file}`)
 }
 
-const stonksList = fs.readdirSync('./content/images/stonks/')
+const stonksList = fs.readdirSync(`${contentDir}/images/stonks/`)
 let stonksFiles = []
 for(const file of stonksList) {
-    stonksFiles.push(`./content/images/stonks/${file}`)
+    stonksFiles.push(`${contentDir}/images/stonks/${file}`)
 }
 
 module.exports = {
@@ -58,9 +60,9 @@ module.exports = {
         console.log("Message received: " + message.content)
 
         if(message.channel.guild != serverMap['DOP'] && ((message.content.toLowerCase().match(/(?:^| )let'?s/) && message.content.toLowerCase().includes(' go')) || message.content.toLowerCase().includes('lfg'))){
-            console.log("LET'S FUCKING GOOOOOOOO")
-            const letsFuckingGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
-            message.channel.send({ files: [letsFuckingGo] })
+            console.log("LET'S GOOOOOOOO")
+            const letsGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
+            message.channel.send({ files: [letsGo] })
         }
         if(message.channel.guild != serverMap['DOP'] && message.content.toLowerCase().includes("booba")){
             console.log("BOOBA")

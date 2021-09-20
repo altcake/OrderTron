@@ -11,6 +11,7 @@
 **/.editorconfig
 **/.aws
 **/dist
+**/content
 **/src/commands/merge.js*
 **/src/commands/training.js*
 **/appspec.yml
