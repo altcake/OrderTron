@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt upgrade
 sudp apt install -y ruby
 sudo apt install -y wget
 sudo apt install -y awscli

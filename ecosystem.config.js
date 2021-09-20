@@ -3,9 +3,7 @@ module.exports = {
     {
       name: 'ordertron-aws',
       cwd: '~/ordertron-aws',
-      script: 'npm',
-      args: 'start',
-      interpreter: 'none',
+      script: './src/main.js',
       env: {
         NODE_ENV: 'prod',
       },
