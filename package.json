@@ -1,16 +1,15 @@
 {
   "name": "ordertron",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Restoring absolute tranquility",
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_PATH=src/ node src/main.js",
+    "start": "node src/main.js",
     "test": "jest"
   },
   "author": "Ara Malayan",
   "license": "MIT",
   "dependencies": {
-    "canvas": "^2.8.0",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
