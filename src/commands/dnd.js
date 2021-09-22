@@ -24,17 +24,22 @@ module.exports = {
             if(/^\d+d\d+/.test(rollRequest)) {
                 let rawNumbers = rollRequest.split("d")
                 console.log("Raw Numbers: " + rawNumbers)
-                for(let roll = 0; roll < rawNumbers[0]; roll++) {
-                    rolledNumber = rollDice(rawNumbers[1])
-                    rollResult = rollResult + (rolledNumber + "\n")
-                    if(rawNumbers[0] > 1) {
-                        rollSum += rolledNumber
+                if(rawNumbers[0] > 350) {
+                    console.log("Requested roll was too high: " + rawNumbers[0])
+                    result.addField(rollRequest, "Discord doesn't like rolls this high, so try something smaller.")
+                } else {
+                    for(let roll = 0; roll < rawNumbers[0]; roll++) {
+                        rolledNumber = rollDice(rawNumbers[1])
+                        rollResult = rollResult + (rolledNumber + "\n")
+                        if(rawNumbers[0] > 1) {
+                            rollSum += rolledNumber
+                        }
+                        //console.log(rollResult)
                     }
-                    //console.log(rollResult)
-                }
-                result.addField(rollRequest, rollResult.toString())
-                if(rollSum != 0) {
-                    result.addField("Total:", rollSum.toString())
+                    result.addField(rollRequest, rollResult.toString())
+                    if(rollSum != 0) {
+                        result.addField("Total:", rollSum.toString())
+                    }
                 }
             } else if(/d\d+/.test(rollRequest)) {
                 let sides = rollRequest.slice(1)
