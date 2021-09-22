@@ -52,7 +52,7 @@ jobs:
 
       # Install project dependencies and build
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --production
       
       # Clean NPM cache
       - name: Clean npm cache

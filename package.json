@@ -1,6 +1,6 @@
 {
   "name": "ordertron",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Restoring absolute tranquility",
   "main": "src/main.js",
   "scripts": {
@@ -13,14 +13,14 @@
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "exiftool-vendored": "^15.3.0",
-    "merge-images": "^2.0.0",
     "node-cron": "^3.0.0",
     "node-fetch": "^3.0.0",
-    "syno": "^2.2.0",
     "twitter-api-v2": "^1.4.1"
   },
   "devDependencies": {
-    "jest": "^27.1.0"
+    "jest": "^27.1.0",
+    "exiftool-vendored": "^15.3.0",
+    "merge-images": "^2.0.0",
+    "syno": "^2.2.0"
   }
 }
