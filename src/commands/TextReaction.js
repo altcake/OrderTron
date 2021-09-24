@@ -23,6 +23,7 @@ const suavemente = new MessageAttachment(`${contentDir}/images/suavemente.jpg`)
 const whoops_white = new MessageAttachment(`${contentDir}/images/whoops_white.jpg`)
 const brotherCheck = new MessageAttachment(`${contentDir}/images/brother.jpg`)
 const gotDamn = new MessageAttachment(`${contentDir}/images/damn.jpg`)
+const slowpoke = new MessageAttachment(`${contentDir}/images/slowpoke.jpg`)
 
 const letsGoList = fs.readdirSync(`${contentDir}/images/lets_go/`)
 let letsGoFiles = []
@@ -112,6 +113,11 @@ module.exports = {
             if(number < 0.4) {
                 message.channel.send({ files: [gotDamn] })
             }
+        }
+        if(message.content.toLowerCase().match(/(^|\s)cum/) || message.content.toLowerCase().includes('semen')) {
+            console.log("Slowpoke incoming")
+            setTimeout(() => {message.channel.send({ files: [slowpoke] })}, 120000)
+            console.log("Slowpoke sent")
         }
     }
 }
