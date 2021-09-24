@@ -116,8 +116,7 @@ module.exports = {
         }
         if(message.content.toLowerCase().match(/(^|\s)cum/) || message.content.toLowerCase().includes('semen')) {
             console.log("Slowpoke incoming")
-            setTimeout(() => {message.channel.send({ files: [slowpoke] })}, 120000)
-            console.log("Slowpoke sent")
+            setTimeout(() => {message.reply({ files: [slowpoke] })}, 600000)
         }
     }
 }
