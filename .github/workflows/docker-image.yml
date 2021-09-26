@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    name: Docker image build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        application-name: ['ordertron']
+
+    steps:
+    - name: Get current package version
+      uses: martinbeentjes/npm-get-version-action@v1.1.0
+      with:
+        path: package.json
+
+    
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}:${{ steps.package-version.outputs.current-version}}
