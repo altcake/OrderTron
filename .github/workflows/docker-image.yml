@@ -19,7 +19,9 @@ jobs:
     - name: Get current package version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@v1.1.0
-        run: cat ${{ steps.package-version.outputs.current-version}}
+
+    - name: Check package version
+      run: cat ${{ steps.package-version.outputs.current-version}}
 
     
     - uses: actions/checkout@v2
