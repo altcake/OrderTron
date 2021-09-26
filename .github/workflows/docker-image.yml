@@ -20,9 +20,10 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@v1.1.0
       with:
         path: package.json
+    - name: Check package version
+      run: cat ${{ steps.package-version.outputs.current-version}}
 
     
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: cat ${{ steps.package-version.outputs.current-version}}
       run: docker build --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}:${{ steps.package-version.outputs.current-version}} .
