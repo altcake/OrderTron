@@ -16,14 +16,17 @@ jobs:
         application-name: ['ordertron']
 
     steps:
+    
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Get current package version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@v1.1.0
 
     - name: Check package version
       run: cat ${{ steps.package-version.outputs.current-version}}
-
     
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build Docker image
       run: docker build --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}:${{ steps.package-version.outputs.current-version}} .
