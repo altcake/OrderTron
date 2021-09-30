@@ -1,133 +1,151 @@
-const { Client, Message } = require("discord.js")
-const TwitterApi = require('twitter-api-v2')
-const cron = require('node-cron')
-require('dotenv').config()
+import { Client } from 'discord.js'
+import { TwitterApi as _TwitterApi } from 'twitter-api-v2'
+import pkg from 'node-cron'
+const { schedule } = pkg
 
-const twitterClient = new TwitterApi.TwitterApi(process.env.TWITTER_BEARER_TOKEN)
-const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
+const twitterClient = new _TwitterApi(process.env.TWITTER_BEARER_TOKEN)
+const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] })
 client.login(process.env.DISCORD_API_KEY)
 
-let twitterUserMap = new Map()
-twitterUserMap['mondayDoggy'] = "1386691472754462725"
-twitterUserMap['fridayYakuza'] = "1165068053786312704"
-twitterUserMap['fridayKiller7'] = "1213846076534341638"
-twitterUserMap['fridayLynch'] = "1355278398571106306"
-twitterUserMap['thursdayOOT'] = "1230723636769644544"
-twitterUserMap['wednesdayWii'] = "1333567603093200898"
-twitterUserMap['thursdayFeliz'] = "1304044685351059459"
+const twitterUserMap = new Map()
+twitterUserMap.mondayDoggy = '1386691472754462725'
+twitterUserMap.fridayYakuza = '1165068053786312704'
+twitterUserMap.fridayKiller7 = '1213846076534341638'
+twitterUserMap.fridayLynch = '1355278398571106306'
+twitterUserMap.thursdayOOT = '1230723636769644544'
+twitterUserMap.wednesdayWii = '1333567603093200898'
+twitterUserMap.thursdayFeliz = '1304044685351059459'
 
-const mondayPreparedWeekTweet = "https://twitter.com/pianta_/status/1422171069306265600"
-const mondayMisatoInstagram = "https://www.instagram.com/p/CUVkg2yBJlg/"
-const mondayMisatoTwitter = "https://twitter.com/Misato_Mondays/status/1442611071022338050"
+const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/1422171069306265600'
+const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
+const mondayMisatoTwitter = 'https://twitter.com/Misato_Mondays/status/1442611071022338050'
 
-async function getLatestTweet(accountId) {
-    const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)
-    console.log('Received tweet: ' + accountTweets.data[0].text)
-    const latestTweetLink = accountTweets.data[0].text
-    return latestTweetLink
+let ocbGeneral = ''
+let testGeneral = ''
+
+
+async function getLatestTweet (accountId) {
+  const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)
+  console.log('Received tweet: ' + accountTweets.data[0].text)
+  const latestTweetLink = accountTweets.data[0].text
+  return latestTweetLink
 }
 
-async function monday() {
-    console.log("It's Monday!!!")
-    const TweetLink1 = await getLatestTweet(twitterUserMap['mondayDoggy'])
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayPreparedWeekTweet)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayMisatoInstagram)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayMisatoTwitter)
+function sendMessage (channel, link) {
+  console.log(`timer.js: Sending message to ${channel}`)
+  console.log(`timer.js: Message contents: ${link}`)
+  const sendChannel = client.channels.cache.get(channel)
+  console.log(`Sending to channel ${sendChannel}`)
+  sendChannel.send(link)
+  // const sendChannel = client.channels.cache.find(c => c.id === channel)
+  // sendChannel.send(link)
 }
 
-async function wednesday() {
-    console.log("It's Wednesday!!!")
-    const TweetLink1 = await getLatestTweet(twitterUserMap['wednesdayWii'])
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
+async function monday (channel) {
+  console.log("It's Monday!!!")
+  const mondayList = []
+  const TweetLink1 = await getLatestTweet(twitterUserMap.mondayDoggy)
+  mondayList.push(TweetLink1)
+  mondayList.push(mondayPreparedWeekTweet)
+  mondayList.push(mondayMisatoInstagram)
+  mondayList.push(mondayMisatoTwitter)
+  for (const message of mondayList) {
+    console.log(`Sending message: ${message}`)
+    sendMessage(channel, message)
+  }
 }
 
-async function thursday() {
-    console.log("It's Thursday!!!")
-    const TweetLink1 = await getLatestTweet(twitterUserMap['thursdayOOT'])
-    const TweetLink2 = await getLatestTweet(twitterUserMap['thursdayFeliz'])
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink2)
+async function wednesday (channel) {
+  console.log("It's Wednesday!!!")
+  const TweetLink1 = await getLatestTweet(twitterUserMap.wednesdayWii)
+  sendMessage(channel, TweetLink1)
 }
 
-async function fridayMorning() {
-    console.log("It's Friday (morning)!!!")
-    const TweetLink1 = await getLatestTweet(twitterUserMap['fridayYakuza'])
-    const TweetLink2 = await getLatestTweet(twitterUserMap['fridayLynch'])
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink2)
+async function thursday (channel) {
+  console.log("It's Thursday!!!")
+  const TweetLink1 = await getLatestTweet(twitterUserMap.thursdayOOT)
+  const TweetLink2 = await getLatestTweet(twitterUserMap.thursdayFeliz)
+  sendMessage(channel, TweetLink1)
+  sendMessage(channel, TweetLink2)
 }
 
-async function fridayAfternoon() {
-    console.log("It's Friday (afternoon)!!!")
-    const TweetLink1 = await getLatestTweet(twitterUserMap['fridayKiller7'])
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
+async function fridayMorning (channel) {
+  console.log("It's Friday (morning)!!!")
+  const TweetLink1 = await getLatestTweet(twitterUserMap.fridayYakuza)
+  const TweetLink2 = await getLatestTweet(twitterUserMap.fridayLynch)
+  sendMessage(channel, TweetLink1)
+  sendMessage(channel, TweetLink2)
 }
 
-cron.schedule('0 9 * * 1', () => {
-    monday()
-}, {
+async function fridayAfternoon (channel) {
+  console.log("It's Friday (afternoon)!!!")
+  const TweetLink1 = await getLatestTweet(twitterUserMap.fridayKiller7)
+  sendMessage(channel, TweetLink1)
+}
+
+function setSchedules () {
+  schedule('0 9 * * 1', () => {
+    monday(process.env.SERVER_OCB_GENERAL)
+  }, {
     scheduled: true,
-    timezone: "America/Los_Angeles"
-})
-
-cron.schedule('0 9 * * 3', () => {
-    wednesday()
-}, {
+    timezone: 'America/Los_Angeles'
+  })
+  schedule('0 9 * * 3', () => {
+    wednesday(process.env.SERVER_OCB_GENERAL)
+  }, {
     scheduled: true,
-    timezone: "America/Los_Angeles"
-})
-
-cron.schedule('0 9 * * 4', () => {
-    thursday()
-}, {
+    timezone: 'America/Los_Angeles'
+  })
+  schedule('0 9 * * 4', () => {
+    thursday(process.env.SERVER_OCB_GENERAL)
+  }, {
     scheduled: true,
-    timezone: "America/Los_Angeles"
-})
-
-cron.schedule('0 9 * * 5', () => {
-    fridayMorning()
-}, {
+    timezone: 'America/Los_Angeles'
+  })
+  schedule('0 9 * * 5', () => {
+    fridayMorning(process.env.SERVER_OCB_GENERAL)
+  }, {
     scheduled: true,
-    timezone: "America/Los_Angeles"
-})
-
-cron.schedule('0 15 * * 5', () => {
-    fridayAfternoon()
-}, {
+    timezone: 'America/Los_Angeles'
+  })
+  schedule('0 15 * * 5', () => {
+    fridayAfternoon(process.env.SERVER_OCB_GENERAL)
+  }, {
     scheduled: true,
-    timezone: "America/Los_Angeles"
+    timezone: 'America/Los_Angeles'
+  })
+}
+
+client.on('ready', async () => {
+  ocbGeneral = await client.guilds.fetch(process.env.SERVER_OCB)
+  testGeneral = await client.guilds.fetch(process.env.SERVER_TEST)
+  console.log(ocbGeneral)
+  console.log(testGeneral)
+  setSchedules()
+  console.log('Timer.js: The clock is ticking')
 })
 
-client.on('ready', async() => {
-    await client.guilds.fetch(process.env.SERVER_OCB)
-    await client.guilds.fetch(process.env.SERVER_TEST)
-    console.log('Timer.js: The clock is ticking')
-})
-
-module.exports = {
-    name: 'timer',
-    description: "Timer!",
-    async execute(message, args) {
-        console.log("Received args: " + args)
-        switch(args[0]) {
-            case 'monday':
-                monday()
-                break
-            case 'wednesday':
-                wednesday()
-                break
-            case 'thursday':
-                thursday()
-                break
-            case 'fridayMorning':
-                fridayMorning()
-                break
-            case 'fridayAfternoon':
-                fridayAfternoon()
-                break
-            default:
-                console.log("Unknown timer function!!")
-        }
-    }
+export const name = 'timer'
+export const description = 'Timer!'
+export async function execute (message, args) {
+  console.log('Received args: ' + args)
+  switch (args[0]) {
+    case 'monday':
+      monday(process.env.SERVER_TEST)
+      break
+    case 'wednesday':
+      wednesday(process.env.SERVER_TEST)
+      break
+    case 'thursday':
+      thursday(process.env.SERVER_TEST)
+      break
+    case 'fridayMorning':
+      fridayMorning(process.env.SERVER_TEST)
+      break
+    case 'fridayAfternoon':
+      fridayAfternoon(process.env.SERVER_TEST)
+      break
+    default:
+      console.log('Unknown timer function!!')
+  }
 }
