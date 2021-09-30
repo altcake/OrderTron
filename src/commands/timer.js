@@ -16,7 +16,9 @@ twitterUserMap['thursdayOOT'] = "1230723636769644544"
 twitterUserMap['wednesdayWii'] = "1333567603093200898"
 twitterUserMap['thursdayFeliz'] = "1304044685351059459"
 
-const preparedWeekTweet = "https://twitter.com/pianta_/status/1422171069306265600"
+const mondayPreparedWeekTweet = "https://twitter.com/pianta_/status/1422171069306265600"
+const mondayMisatoInstagram = "https://www.instagram.com/p/CUVkg2yBJlg/"
+const mondayMisatoTwitter = "https://twitter.com/Misato_Mondays/status/1442611071022338050"
 
 async function getLatestTweet(accountId) {
     const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)
@@ -29,7 +31,9 @@ async function monday() {
     console.log("It's Monday!!!")
     const TweetLink1 = await getLatestTweet(twitterUserMap['mondayDoggy'])
     client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(TweetLink1)
-    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(preparedWeekTweet)
+    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayPreparedWeekTweet)
+    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayMisatoInstagram)
+    client.channels.cache.get(process.env.SERVER_OCB_GENERAL).send(mondayMisatoTwitter)
 }
 
 async function wednesday() {
