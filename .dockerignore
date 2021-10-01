@@ -16,3 +16,4 @@
 **/src/commands/training.js*
 **/appspec.yml
 **/ecosystem.config.js
+**/.eslint.yml
