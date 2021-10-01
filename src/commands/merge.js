@@ -1,16 +1,13 @@
-import Discord, { MessageAttachment } from 'discord.js'
 import fs from 'fs'
 import pkg from 'canvas'
 const { createCanvas, loadImage } = pkg
 
-// const logo = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
-// const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
+const logoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
+const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
-const logo = './content/images/image-merge/logo.png'
-const mergeWorkingDir = './content/images/image-merge/results'
-
-async function mergeImages (image, logo) {
+async function mergeImages (image, logoFile) {
   const background = await loadImage(image)
+  const logo = await loadImage(logoFile)
   console.log('Image loaded')
   console.log(`Width: ${background.width}`)
   console.log(`Height: ${background.height}`)
@@ -18,6 +15,7 @@ async function mergeImages (image, logo) {
   console.log('Canvas created')
   const context = canvas.getContext('2d')
   context.drawImage(background, 0, 0, background.width, background.height)
+  context.drawImage(logo, 0, (background.height / 3), (background.width), (background.height))
   const buffer = canvas.toBuffer('image/png')
   const time = Date.now()
   console.log(time)
@@ -42,7 +40,7 @@ export async function execute (message, args) {
     for (const [key] of imageCollection) {
       console.log(imageCollection.get(key).attachment)
       const raw = imageCollection.get(key).attachment
-      const complete = await mergeImages(raw, logo)
+      const complete = await mergeImages(raw, logoFile)
       console.log(`File returned: ${complete}`)
       outgoingImages.push(complete)
       console.log(`First image to send: ${outgoingImages[0]}`)
