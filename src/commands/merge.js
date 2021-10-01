@@ -1,42 +1,52 @@
 import Discord, { MessageAttachment } from 'discord.js'
 import fs from 'fs'
-import { Canvas } from 'canvas'
+import pkg from 'canvas'
+const { createCanvas, loadImage } = pkg
 
-const logo = './content/images/image-merge/logo.png'
+// const logo = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
+// const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
-const incomingImages = []
+const logo = `./content/images/image-merge/logo.png`
+const mergeWorkingDir = `./content/images/image-merge/results`
+
 const outgoingImages = []
 
 async function mergeImages (image, logo) {
-  const background = await Canvas.loadImage(image)
-  const canvas = Canvas.createCanvas(background.width, background.height)
+  const background = await loadImage(image)
+  console.log('Image loaded')
+  console.log(`Width: ${background.width}`)
+  console.log(`Height: ${background.height}`)
+  const canvas = createCanvas(background.width, background.height)
+  console.log('Canvas created')
   const context = canvas.getContext('2d')
   context.drawImage(background, 0, 0, background.width, background.height)
-  return new MessageAttachment(canvas.toBuffer(), 'result.png')
+  const buffer = canvas.toBuffer('image/png')
+  const time = Date.now()
+  console.log(time)
+  const outputFilePath = `${mergeWorkingDir}/${time}.png`
+  console.log(outputFilePath)
+  fs.writeFileSync(outputFilePath, buffer)
+  return outputFilePath
 }
 
 export const name = 'merge'
 export const description = 'This is gonna get real old real fast'
-export function execute (message, args) {
+export async function execute (message, args) {
   const imageCollection = message.attachments
-  console.log(imageCollection)
-  // Extract images from incoming message
-  // for (const image of imageCollection) {
-  //   console.log(image[1].attachment)
-  //   incomingImages.push(image[1].attachment)
-  // }
-
-  // for (const image of incomingImages) {
-  //   const complete = mergeImages(image, logo)
-  //   outgoingImages.push(complete)
-  // }
-
-  // incomingImages.push(image[1].attachment)
-
-  const raw = imageCollection.attachment
-  const complete = mergeImages(raw, logo)
-  outgoingImages.push(complete)
-  for (const image in outgoingImages) {
-    message.channel.send({ files: [image] })
+  console.log(`Images sent: ${imageCollection.size}`)
+  if (imageCollection.size == 0) {
+    console.log('No image sent with message')
+  } else {
+    console.log(imageCollection)
+    console.log(imageCollection.entries())
+    for (const [key] of imageCollection) {
+      console.log(imageCollection.get(key).attachment)
+      const raw = imageCollection.get(key).attachment
+      const complete = await mergeImages(raw, logo)
+      outgoingImages.push(complete)
+    }
+    for (const image in outgoingImages) {
+      message.channel.send({ files: [image] })
+    }
   }
 }
