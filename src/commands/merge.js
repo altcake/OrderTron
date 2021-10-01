@@ -6,10 +6,8 @@ const { createCanvas, loadImage } = pkg
 // const logo = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
 // const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
-const logo = `./content/images/image-merge/logo.png`
-const mergeWorkingDir = `./content/images/image-merge/results`
-
-const outgoingImages = []
+const logo = './content/images/image-merge/logo.png'
+const mergeWorkingDir = './content/images/image-merge/results'
 
 async function mergeImages (image, logo) {
   const background = await loadImage(image)
@@ -26,6 +24,7 @@ async function mergeImages (image, logo) {
   const outputFilePath = `${mergeWorkingDir}/${time}.png`
   console.log(outputFilePath)
   fs.writeFileSync(outputFilePath, buffer)
+  console.log(`File written: ${outputFilePath}`)
   return outputFilePath
 }
 
@@ -39,13 +38,17 @@ export async function execute (message, args) {
   } else {
     console.log(imageCollection)
     console.log(imageCollection.entries())
+    const outgoingImages = []
     for (const [key] of imageCollection) {
       console.log(imageCollection.get(key).attachment)
       const raw = imageCollection.get(key).attachment
       const complete = await mergeImages(raw, logo)
+      console.log(`File returned: ${complete}`)
       outgoingImages.push(complete)
+      console.log(`First image to send: ${outgoingImages[0]}`)
     }
-    for (const image in outgoingImages) {
+    for (const image of outgoingImages) {
+      console.log(`Sending image: ${image}`)
       message.channel.send({ files: [image] })
     }
   }
