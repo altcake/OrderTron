@@ -16,12 +16,16 @@ async function mergeImages (image, logoFile) {
   const context = canvas.getContext('2d')
   context.drawImage(background, 0, 0, background.width, background.height)
   context.drawImage(logo, 0, (background.height / 3), (background.width), (background.height))
-  const buffer = canvas.toBuffer('image/png')
+  const buffer = canvas.toBuffer('image/jpeg')
   const time = Date.now()
   console.log(time)
-  const outputFilePath = `${mergeWorkingDir}/${time}.png`
+  const outputFilePath = `${mergeWorkingDir}/${time}.jpg`
   console.log(outputFilePath)
-  fs.writeFileSync(outputFilePath, buffer)
+  try {
+    fs.writeFileSync(outputFilePath, buffer)
+  } catch (e) {
+    console.error(e)
+  }
   console.log(`File written: ${outputFilePath}`)
   return outputFilePath
 }
