@@ -31,7 +31,7 @@ export const description = 'This is gonna get real old real fast'
 export async function execute (message, args) {
   const imageCollection = message.attachments
   console.log(`Images sent: ${imageCollection.size}`)
-  if (imageCollection.size == 0) {
+  if (imageCollection.size === 0) {
     console.log('No image sent with message')
   } else {
     console.log(imageCollection)
