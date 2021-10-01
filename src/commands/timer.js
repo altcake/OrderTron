@@ -43,7 +43,6 @@ async function monday (channel) {
   mondayList.push(mondayMisatoTwitter)
   for (const message of mondayList) {
     console.log(`Sending message: ${message}`)
-    console.log('Working with channel:')
     console.log(channel)
     sendMessage(channel, message)
   }
