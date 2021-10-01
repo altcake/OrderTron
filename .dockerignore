@@ -15,5 +15,5 @@
 **/src/commands/merge.js*
 **/src/commands/training.js*
 **/appspec.yml
-**/ecosystem.config.js
+**/ecosystem.config.cjs
 **/.eslint.yml
