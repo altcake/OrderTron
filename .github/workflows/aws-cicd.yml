@@ -56,7 +56,7 @@ jobs:
 
       # Install supporting libraries
       - name: Install supporting libraries
-        run: apt install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+        run: sudo apt install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
       # Install project dependencies and build
       - name: Install dependencies
