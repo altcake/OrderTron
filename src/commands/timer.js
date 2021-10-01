@@ -20,10 +20,6 @@ const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/142217106930
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
 const mondayMisatoTwitter = 'https://twitter.com/Misato_Mondays/status/1442611071022338050'
 
-let ocbGeneral = ''
-let testGeneral = ''
-
-
 async function getLatestTweet (accountId) {
   const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)
   console.log('Received tweet: ' + accountTweets.data[0].text)
@@ -32,13 +28,9 @@ async function getLatestTweet (accountId) {
 }
 
 function sendMessage (channel, link) {
-  console.log(`timer.js: Sending message to ${channel}`)
-  console.log(`timer.js: Message contents: ${link}`)
-  const sendChannel = client.channels.cache.get(channel)
-  console.log(`Sending to channel ${sendChannel}`)
-  sendChannel.send(link)
-  // const sendChannel = client.channels.cache.find(c => c.id === channel)
-  // sendChannel.send(link)
+  console.log(`${name}: Sending message to ${channel}`)
+  console.log(`${name}: Message contents: ${link}`)
+  client.channels.cache.get(channel).send(link)
 }
 
 async function monday (channel) {
@@ -51,6 +43,8 @@ async function monday (channel) {
   mondayList.push(mondayMisatoTwitter)
   for (const message of mondayList) {
     console.log(`Sending message: ${message}`)
+    console.log('Working with channel:')
+    console.log(channel)
     sendMessage(channel, message)
   }
 }
@@ -117,12 +111,16 @@ function setSchedules () {
 }
 
 client.on('ready', async () => {
-  ocbGeneral = await client.guilds.fetch(process.env.SERVER_OCB)
-  testGeneral = await client.guilds.fetch(process.env.SERVER_TEST)
-  console.log(ocbGeneral)
-  console.log(testGeneral)
+  await client.guilds.fetch(process.env.SERVER_OCB)
+    .catch(error => {
+      console.error(`Issue retrieving information for ${process.env.SERVER_OCB}: ${error}`)
+    })
+  await client.guilds.fetch(process.env.SERVER_TEST)
+    .catch(error => {
+      console.error(`Issue retrieving information for ${process.env.SERVER_TEST}: ${error}`)
+    })
   setSchedules()
-  console.log('Timer.js: The clock is ticking')
+  console.log(`${name}: The clock is ticking`)
 })
 
 export const name = 'timer'
@@ -131,19 +129,19 @@ export async function execute (message, args) {
   console.log('Received args: ' + args)
   switch (args[0]) {
     case 'monday':
-      monday(process.env.SERVER_TEST)
+      monday(process.env.SERVER_TEST_GENERAL)
       break
     case 'wednesday':
-      wednesday(process.env.SERVER_TEST)
+      wednesday(process.env.SERVER_TEST_GENERAL)
       break
     case 'thursday':
-      thursday(process.env.SERVER_TEST)
+      thursday(process.env.SERVER_TEST_GENERAL)
       break
     case 'fridayMorning':
-      fridayMorning(process.env.SERVER_TEST)
+      fridayMorning(process.env.SERVER_TEST_GENERAL)
       break
     case 'fridayAfternoon':
-      fridayAfternoon(process.env.SERVER_TEST)
+      fridayAfternoon(process.env.SERVER_TEST_GENERAL)
       break
     default:
       console.log('Unknown timer function!!')
