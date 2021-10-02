@@ -8,14 +8,18 @@ const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 async function mergeImages (image, logoFile) {
   const background = await loadImage(image)
   const logo = await loadImage(logoFile)
-  console.log('Image loaded')
   console.log(`Width: ${background.width}`)
   console.log(`Height: ${background.height}`)
   const canvas = createCanvas(background.width, background.height)
   console.log('Canvas created')
   const context = canvas.getContext('2d')
   context.drawImage(background, 0, 0, background.width, background.height)
-  context.drawImage(logo, 0, (background.height / 3), (background.width), (background.height))
+  // Ensure the logo has a 1:1 aspect ratio
+  let logoSize = background.width
+  if (background.width > background.height) {
+    logoSize = background.height
+  }
+  context.drawImage(logo, ((background.width / 2) - (logoSize / 2)), (background.height - (logoSize * (0.66))), logoSize, logoSize)
   const buffer = canvas.toBuffer('image/jpeg')
   const time = Date.now()
   console.log(time)

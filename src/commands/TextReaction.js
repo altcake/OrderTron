@@ -112,7 +112,7 @@ export function execute (message) {
       message.channel.send({ files: [gotDamn] })
     }
   }
-  if (message.content.toLowerCase().match(/(^|\s)cum/) || message.content.toLowerCase().includes('semen')) {
+  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH))) {
     console.log('Slowpoke incoming')
     setTimeout(() => { message.reply({ files: [slowpoke] }) }, 600000)
   }

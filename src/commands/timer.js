@@ -42,39 +42,49 @@ async function monday (channel) {
   mondayList.push(mondayMisatoInstagram)
   mondayList.push(mondayMisatoTwitter)
   for (const message of mondayList) {
-    console.log(`Sending message: ${message}`)
-    console.log(channel)
     sendMessage(channel, message)
   }
 }
 
 async function wednesday (channel) {
   console.log("It's Wednesday!!!")
+  const wednesdayList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.wednesdayWii)
-  sendMessage(channel, TweetLink1)
+  wednesdayList.push(TweetLink1)
+  for (const message of wednesdayList) {
+    sendMessage(channel, message)
+  }
 }
 
 async function thursday (channel) {
   console.log("It's Thursday!!!")
+  const thursdayList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.thursdayOOT)
   const TweetLink2 = await getLatestTweet(twitterUserMap.thursdayFeliz)
-  sendMessage(channel, TweetLink1)
-  sendMessage(channel, TweetLink2)
+  thursdayList.push(TweetLink1)
+  thursdayList.push(TweetLink2)
+  for (const message of thursdayList) {
+    sendMessage(channel, message)
+  }
 }
 
 async function fridayMorning (channel) {
   console.log("It's Friday (morning)!!!")
+  const fridayMorningList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.fridayYakuza)
   const TweetLink2 = await getLatestTweet(twitterUserMap.fridayLynch)
-  sendMessage(channel, TweetLink1)
-  sendMessage(channel, TweetLink2)
+  fridayMorningList.push(TweetLink1)
+  fridayMorningList.push(TweetLink2)
+  for (const message of fridayMorningList) {
+    sendMessage(channel, message)
+  }
 }
 
-async function fridayAfternoon (channel) {
-  console.log("It's Friday (afternoon)!!!")
-  const TweetLink1 = await getLatestTweet(twitterUserMap.fridayKiller7)
-  sendMessage(channel, TweetLink1)
-}
+// async function fridayAfternoon (channel) {
+//   console.log("It's Friday (afternoon)!!!")
+//   const TweetLink1 = await getLatestTweet(twitterUserMap.fridayKiller7)
+//   sendMessage(channel, TweetLink1)
+// }
 
 function setSchedules () {
   schedule('0 9 * * 1', () => {
@@ -101,12 +111,12 @@ function setSchedules () {
     scheduled: true,
     timezone: 'America/Los_Angeles'
   })
-  schedule('0 15 * * 5', () => {
-    fridayAfternoon(process.env.SERVER_OCB_GENERAL)
-  }, {
-    scheduled: true,
-    timezone: 'America/Los_Angeles'
-  })
+  // schedule('0 15 * * 5', () => {
+  //   fridayAfternoon(process.env.SERVER_OCB_GENERAL)
+  // }, {
+  //   scheduled: true,
+  //   timezone: 'America/Los_Angeles'
+  // })
 }
 
 client.on('ready', async () => {
@@ -139,9 +149,9 @@ export async function execute (message, args) {
     case 'fridayMorning':
       fridayMorning(process.env.SERVER_TEST_GENERAL)
       break
-    case 'fridayAfternoon':
-      fridayAfternoon(process.env.SERVER_TEST_GENERAL)
-      break
+    // case 'fridayAfternoon':
+    //   fridayAfternoon(process.env.SERVER_TEST_GENERAL)
+    //   break
     default:
       console.log('Unknown timer function!!')
   }
