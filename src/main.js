@@ -11,8 +11,7 @@ const commandFiles = readdirSync('./src/commands/').filter(file => file.endsWith
 for (const file of commandFiles) {
   import(`./commands/${file}`)
     .then(command => {
-      console.log(command.name)
-      console.log(command)
+      console.log(`Command detected: ${command.name}`)
       client.commands.set(command.name, command)
     })
     .catch(error => {

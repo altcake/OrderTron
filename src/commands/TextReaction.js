@@ -114,6 +114,9 @@ export function execute (message) {
   }
   if (message.content.toLowerCase().match(new RegExp(process.env.MATCH))) {
     console.log('Slowpoke incoming')
-    setTimeout(() => { message.reply({ files: [slowpoke] }) }, 600000)
+    // Set message delay between 10 minutes to 60 minutes
+    const delay = Math.floor(Math.random() * 3000000) + 600000
+    console.log(`Message delay: ${delay / 60000} minutes`)
+    setTimeout(() => { message.reply({ files: [slowpoke] }) }, delay)
   }
 }
