@@ -48,6 +48,8 @@ client.on('messageCreate', message => {
       client.commands.get('merge').execute(message, args)
     } else if (command === 'timer') {
       client.commands.get('timer').execute(message, args, client)
+    } else if (command === 'nick') {
+      client.commands.get('nick').execute(message, args, client)
     }
   }
 })
