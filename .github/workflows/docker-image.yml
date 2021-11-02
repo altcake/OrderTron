@@ -8,16 +8,14 @@ on:
 
 jobs:
 
-  build:
-    name: Docker image build
+  build_and_push:
+    name: Docker image build and push to Docker Hub
     runs-on: ubuntu-latest
     strategy:
       matrix:
         application-name: ['ordertron']
 
     steps:
-    
-
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -25,5 +23,20 @@ jobs:
       id: package-version
       uses: martinbeentjes/npm-get-version-action@v1.1.0
     
-    - name: Build Docker image
+    - name: Build version tagged Docker image
       run: docker build --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}:${{ steps.package-version.outputs.current-version}} .
+
+    - name: Build latest tagged Docker image
+      run: docker build --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }} .
+    
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1.10.0
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+    - name: Push version tagged Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}:${{ steps.package-version.outputs.current-version}}
+    
+    - name: Push latest tagged Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKER_USER }}/${{ matrix.application-name }}
