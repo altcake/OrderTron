@@ -23,6 +23,10 @@ const whoopsWhite = new MessageAttachment(`${contentDir}/images/whoops_white.jpg
 const brotherCheck = new MessageAttachment(`${contentDir}/images/brother.jpg`)
 const gotDamn = new MessageAttachment(`${contentDir}/images/damn.jpg`)
 const slowpoke = new MessageAttachment(`${contentDir}/images/slowpoke.jpg`)
+const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png`)
+const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.png`)
+
+let bottomCheckCounter = 0
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -101,9 +105,21 @@ export function execute (message) {
     const stonks = new MessageAttachment(stonksFiles[Math.floor(Math.random() * stonksFiles.length)])
     message.channel.send({ files: [stonks] })
   }
-  if (message.channel.guild == serverMap.OCB && message.content.toLowerCase().includes('brother check')) {
+  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('brother check')) {
     console.log('BROTHER CHECK')
     message.channel.send({ files: [brotherCheck] })
+  }
+  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('bottom check')) {
+    console.log('BOTTOM CHECK')
+    message.channel.send({ files: [bottomCheck] })
+    if (bottomCheckCounter < 6) {
+      bottomCheckCounter += 1
+      setTimeout(() => { bottomCheckCounter = 0 }, 60000)
+    } else if (bottomCheckCounter == 6) {
+      console.log('SUFFICIENT BOTTOM SUPPORT HAS BEEN REACHED')
+      message.channel.send({ files: [bottomCheckSuccess] })
+      bottomCheckCounter = 0
+    }
   }
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
     console.log('GOT DAMN')
