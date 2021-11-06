@@ -111,11 +111,12 @@ export function execute (message) {
   }
   if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('bottom check')) {
     console.log('BOTTOM CHECK')
+    bottomCheckCounter += 1
     message.channel.send({ files: [bottomCheck] })
     if (bottomCheckCounter < 6) {
-      bottomCheckCounter += 1
+      console.log(`Counter value: ${bottomCheckCounter}`)
       setTimeout(() => { bottomCheckCounter = 0 }, 60000)
-    } else if (bottomCheckCounter == 6) {
+    } else if (bottomCheckCounter >= 6) {
       console.log('SUFFICIENT BOTTOM SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [bottomCheckSuccess] })
       bottomCheckCounter = 0
