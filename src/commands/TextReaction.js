@@ -24,7 +24,7 @@ const brotherCheck = new MessageAttachment(`${contentDir}/images/brother.jpg`)
 const gotDamn = new MessageAttachment(`${contentDir}/images/damn.jpg`)
 const slowpoke = new MessageAttachment(`${contentDir}/images/slowpoke.jpg`)
 const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png`)
-const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.png`)
+const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.jpg`)
 
 let bottomCheckCounter = 0
 
