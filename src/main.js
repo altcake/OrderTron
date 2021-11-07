@@ -2,6 +2,13 @@ import { Client, Collection } from 'discord.js'
 import { readdirSync } from 'fs'
 import dotenv from 'dotenv'
 
+const nodeVersion = process.versions.node.split('.')[0]
+console.log(`Detected nodejs version: ${nodeVersion}`)
+if (nodeVersion < 16) {
+  console.log('OrderTron requires nodejs v16 or higher to run. Please install a compatible nodejs version.')
+  process.exit(1)
+}
+
 dotenv.config()
 
 const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS'] })
