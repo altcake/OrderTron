@@ -115,7 +115,7 @@ export function execute (message) {
     message.channel.send({ files: [bottomCheck] })
     if (bottomCheckCounter < 6) {
       console.log(`Counter value: ${bottomCheckCounter}`)
-      setTimeout(() => { bottomCheckCounter = 0 }, 60000)
+      setTimeout(() => { bottomCheckCounter = 0 }, 600000)
     } else if (bottomCheckCounter >= 6) {
       console.log('SUFFICIENT BOTTOM SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [bottomCheckSuccess] })
