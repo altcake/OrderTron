@@ -45,7 +45,11 @@ client.on('messageCreate', message => {
     } else if (command === 'help') {
       client.commands.get('help').execute(message, args)
     } else if (command === 'merge') {
-      client.commands.get('merge').execute(message, args)
+      client.commands.get('merge').execute(message, args, 'br')
+    } else if (command === 'brmerge') {
+      client.commands.get('merge').execute(message, args, 'br')
+    } else if (command === 'ggmerge') {
+      client.commands.get('merge').execute(message, args, 'gg')
     } else if (command === 'timer') {
       client.commands.get('timer').execute(message, args, client)
     } else if (command === 'nick') {
