@@ -38,22 +38,16 @@ client.on('messageCreate', message => {
     const args = message.content.slice(prefix.length).split(' ')
     const command = args.shift().toLowerCase()
 
-    if (command === 'enforce') {
-      client.commands.get('enforce').execute(message, args)
-    } else if (command === 'enka') {
-      client.commands.get('enka').execute(message, args)
-    } else if (command === 'help') {
-      client.commands.get('help').execute(message, args)
-    } else if (command === 'merge') {
-      client.commands.get('merge').execute(message, args, 'br')
-    } else if (command === 'brmerge') {
-      client.commands.get('merge').execute(message, args, 'br')
-    } else if (command === 'ggmerge') {
-      client.commands.get('merge').execute(message, args, 'gg')
-    } else if (command === 'timer') {
-      client.commands.get('timer').execute(message, args, client)
-    } else if (command === 'nick') {
-      client.commands.get('nick').execute(message, args, client)
+    switch (command) {
+      case 'enforce': client.commands.get('enforce').execute(message, args); break
+      case 'enka': client.commands.get('enka').execute(message, args); break
+      case 'help': client.commands.get('help').execute(message, args); break
+      case 'merge': client.commands.get('merge').execute(message, args, 'br'); break
+      case 'brmerge': client.commands.get('merge').execute(message, args, 'br'); break
+      case 'ggmerge': client.commands.get('merge').execute(message, args, 'gg'); break
+      case 'timer': client.commands.get('timer').execute(message, args); break
+      case 'nick': client.commands.get('nick').execute(message, args); break
+      default: message.channel.send({ content: '(┛◉Д◉)┛彡┻━┻\ncease your activities' })
     }
   }
 })
