@@ -1,4 +1,4 @@
-import { Client } from 'discord.js'
+import { Client, MessageAttachment } from 'discord.js'
 import { TwitterApi as _TwitterApi } from 'twitter-api-v2'
 import pkg from 'node-cron'
 const { schedule } = pkg
@@ -6,6 +6,8 @@ const { schedule } = pkg
 const twitterClient = new _TwitterApi(process.env.TWITTER_BEARER_TOKEN)
 const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] })
 client.login(process.env.DISCORD_API_KEY)
+
+const contentDir = process.env.CONTENT_DIR
 
 const twitterUserMap = new Map()
 twitterUserMap.mondayDoggy = '1386691472754462725'
@@ -19,6 +21,8 @@ twitterUserMap.thursdayFeliz = '1304044685351059459'
 const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/1422171069306265600'
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
 const mondayMisatoTwitter = 'https://twitter.com/Misato_Mondays/status/1442611071022338050'
+
+const thursdayPotato = new MessageAttachment(`${contentDir}/images/timer/thursday/20210225_103521.jpg`)
 
 async function getLatestTweet (accountId) {
   const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)
@@ -63,6 +67,7 @@ async function thursday (channel) {
   const TweetLink2 = await getLatestTweet(twitterUserMap.thursdayFeliz)
   thursdayList.push(TweetLink1)
   thursdayList.push(TweetLink2)
+  client.channels.cache.get(channel).send({ files: [thursdayPotato] })
   for (const message of thursdayList) {
     sendMessage(channel, message)
   }
