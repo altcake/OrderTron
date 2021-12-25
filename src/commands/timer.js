@@ -17,6 +17,7 @@ twitterUserMap.fridayLynch = '1355278398571106306'
 twitterUserMap.thursdayOOT = '1230723636769644544'
 twitterUserMap.wednesdayWii = '1333567603093200898'
 twitterUserMap.thursdayFeliz = '1304044685351059459'
+twitterUserMap.fridayPacific = '1442289929808084992'
 
 const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/1422171069306265600'
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
@@ -78,8 +79,10 @@ async function fridayMorning (channel) {
   const fridayMorningList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.fridayYakuza)
   const TweetLink2 = await getLatestTweet(twitterUserMap.fridayLynch)
+  const TweetLink3 = await getLatestTweet(twitterUserMap.fridayPacific)
   fridayMorningList.push(TweetLink1)
   fridayMorningList.push(TweetLink2)
+  fridayMorningList.push(TweetLink3)
   for (const message of fridayMorningList) {
     sendMessage(channel, message)
   }
