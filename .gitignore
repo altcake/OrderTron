@@ -6,3 +6,4 @@ npm-debug.log
 content
 .vscode
 src/commands/training.js*
+corde.config.json

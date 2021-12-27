@@ -16,3 +16,4 @@
 **/appspec.yml
 **/ecosystem.config.cjs
 **/.eslint.yml
+**/corde.config.json
