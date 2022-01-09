@@ -26,7 +26,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "exiftool-vendored": "^15.6.0",
-    "jest": "^27.4.3",
     "syno": "^2.2.0"
   }
 }
