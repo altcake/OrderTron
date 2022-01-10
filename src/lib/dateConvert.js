@@ -1,4 +1,4 @@
-export const name = 'dateConvert'
+export const name = 'DateConvert'
 export const description = 'Converts an int to a string with days/hours/minutes/seconds'
 export function convertToString (time) {
   const timeInSeconds = Math.floor(time / 1000)
