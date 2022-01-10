@@ -1,5 +1,5 @@
 import { MessageAttachment, MessageEmbed } from 'discord.js'
-import { readdirSync, readFileSync } from 'fs'
+import { readdirSync, readFileSync, writeFile, existsSync } from 'fs'
 import * as convert from '../lib/DateConvert.js'
 
 console.log('TextReaction.js: Setting serverMap')
@@ -29,7 +29,13 @@ const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_ch
 
 let bottomCheckCounter = 0
 
+/* try {
+  if (existsSync('../textconfig.json')) {
 
+  }
+} catch (err) {
+  console.error('TextReaction config file not found.  Creating a new one')
+} */
 
 const wordOneLastUsed = new Map()
 wordOneLastUsed.OCB = Date.now()
