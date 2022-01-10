@@ -5,9 +5,9 @@ export function convertToString (time) {
   console.log(`Time in seconds: ${timeInSeconds}`)
   const days = Math.floor(timeInSeconds / 86400)
   console.log(`Days: ${days}`)
-  const hours = Math.floor(timeInSeconds / 3600)
+  const hours = Math.floor((timeInSeconds - (days * 86400)) / 3600)
   console.log(`Hours: ${hours}`)
-  const minutes = Math.floor(timeInSeconds / 60)
+  const minutes = Math.floor((timeInSeconds - (days * 86400) - (hours * 3600)) / 60)
   console.log(`Minutes: ${minutes}`)
   let timeString = ''
   if (days !== 0) {

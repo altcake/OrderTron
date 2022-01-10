@@ -1,6 +1,6 @@
 import { MessageAttachment, MessageEmbed } from 'discord.js'
 import { readdirSync } from 'fs'
-import * as convert from '../lib/dateConvert.js'
+import * as convert from '../lib/DateConvert.js'
 
 console.log('TextReaction.js: Setting serverMap')
 const serverMap = new Map()
