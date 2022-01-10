@@ -15,6 +15,7 @@ export function execute (message, args) {
       { name: '~enforce', value: 'Use this to lay down the law.', inline: true },
       { name: '~enka', value: 'Recommends some classy music.', inline: true },
       { name: '~training', value: '<NOT FINISHED> Obtain a training manual.' },
-      { name: '~XdX or ~dX', value: 'Roll some dice!  This command can also be chained Eg. ~d20 2d10' })
+      { name: '~XdX or ~dX', value: 'Roll some dice!  This command can also be chained Eg. ~d20 2d10' },
+      { name: '~report', value: 'Display some server word usage stats' })
   message.member.send({ embeds: [printHelp] })
 }

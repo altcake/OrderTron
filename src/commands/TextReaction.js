@@ -1,4 +1,4 @@
-import { MessageAttachment } from 'discord.js'
+import { MessageAttachment, MessageEmbed } from 'discord.js'
 import { readdirSync } from 'fs'
 import * as convert from '../lib/dateConvert.js'
 
@@ -153,4 +153,23 @@ export function execute (message) {
     console.log(`Message delay: ${delay / 60000} minutes`)
     setTimeout(() => { message.reply({ files: [slowpoke] }) }, delay)
   }
+}
+
+export function report (message) {
+  console.log(`Report requested for ${message.channel.guild.name}`)
+  // Word one
+  let timeSinceLastUse = null
+  switch (message.channel.guild.id) {
+    case serverMap.TEST: timeSinceLastUse = Date.now() - wordOneLastUsed.TEST; break
+    case serverMap.OCB: timeSinceLastUse = Date.now() - wordOneLastUsed.OCB; break
+    case serverMap.DOP: timeSinceLastUse = Date.now() - wordOneLastUsed.DOP; break
+    default: console.log('Unknown server')
+  }
+  const timeString = convert.convertToString(timeSinceLastUse)
+  const reportEmbed = new MessageEmbed()
+    .setColor('#ff0000')
+    .setTitle(`Metrics for ${message.channel.guild.name}`)
+  const wordOneString = `It has been ${timeString} since someone said ${process.env.WORD1}`
+  reportEmbed.addField(process.env.WORD1, wordOneString)
+  message.channel.send({ embeds: [reportEmbed] })
 }
