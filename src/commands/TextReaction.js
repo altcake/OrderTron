@@ -1,5 +1,6 @@
 import { MessageAttachment } from 'discord.js'
 import { readdirSync } from 'fs'
+import * as convert from '../lib/dateConvert.js'
 
 console.log('TextReaction.js: Setting serverMap')
 const serverMap = new Map()
@@ -27,6 +28,11 @@ const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png
 const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.jpg`)
 
 let bottomCheckCounter = 0
+
+const wordOneLastUsed = new Map()
+wordOneLastUsed.OCB = Date.now()
+wordOneLastUsed.DOP = Date.now()
+wordOneLastUsed.TEST = Date.now()
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -57,7 +63,7 @@ export const description = 'Eye for an eye.'
 export function execute (message) {
   // Find ID of the server
   console.log('Activity from guild: ' + message.channel.guild.name)
-  console.log('Activity from channel: ' + message.channel)
+  console.log('Activity from channel: ' + message.channel.name)
   console.log('Activity from user ID: ' + message.member.id)
   console.log('Activity from user: ' + message.member.displayName)
   console.log('Message received: ' + message.content)
@@ -67,12 +73,12 @@ export function execute (message) {
     const letsGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
     message.channel.send({ files: [letsGo] })
   }
-  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('booba')) {
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('booba')) {
     console.log('BOOBA')
     const booba = new MessageAttachment(boobaFiles[Math.floor(Math.random() * boobaFiles.length)])
     message.channel.send({ files: [booba] })
   }
-  if (message.channel.guild != serverMap.DOP && ((message.content.toLowerCase().includes('spyro') || message.content.toLowerCase().includes('subway')) || (message.content.toLowerCase().match(/(?:^| )eat/) && message.content.toLowerCase().includes('fresh')))) {
+  if (message.channel.guild.id !== serverMap.DOP && ((message.content.toLowerCase().includes('spyro') || message.content.toLowerCase().includes('subway')) || (message.content.toLowerCase().match(/(?:^| )eat/) && message.content.toLowerCase().includes('fresh')))) {
     console.log('SPYRO')
     const spyro = new MessageAttachment(spyroFiles[Math.floor(Math.random() * spyroFiles.length)])
     message.channel.send({ files: [spyro] })
@@ -81,7 +87,7 @@ export function execute (message) {
     console.log('Big oof')
     message.channel.send({ files: [bigOof] })
   }
-  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('white')) {
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('white')) {
     console.log('Making the color')
     const number = Math.random()
     if (number < 0.3) {
@@ -92,24 +98,24 @@ export function execute (message) {
       }
     }
   }
-  if (message.channel.guild == serverMap.OCB && message.content.toLowerCase().includes('suavemente')) {
+  if (message.channel.guild.id === serverMap.OCB && message.content.toLowerCase().includes('suavemente')) {
     console.log('SUAVEMENTE')
     message.channel.send({ files: [suavemente] })
   }
-  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('sexy') && message.content.toLowerCase().includes('back')) {
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('sexy') && message.content.toLowerCase().includes('back')) {
     console.log('SEXY BACK')
     message.channel.send('```yeah```')
   }
-  if (message.channel.guild != serverMap.DOP && (message.content.toLowerCase().includes('stonks'))) {
+  if (message.channel.guild.id !== serverMap.DOP && (message.content.toLowerCase().includes('stonks'))) {
     console.log('STONKS')
     const stonks = new MessageAttachment(stonksFiles[Math.floor(Math.random() * stonksFiles.length)])
     message.channel.send({ files: [stonks] })
   }
-  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('brother check')) {
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('brother check')) {
     console.log('BROTHER CHECK')
     message.channel.send({ files: [brotherCheck] })
   }
-  if (message.channel.guild != serverMap.DOP && message.content.toLowerCase().includes('bottom check')) {
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('bottom check')) {
     console.log('BOTTOM CHECK')
     bottomCheckCounter += 1
     message.channel.send({ files: [bottomCheck] })
@@ -129,7 +135,18 @@ export function execute (message) {
       message.channel.send({ files: [gotDamn] })
     }
   }
-  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH))) {
+  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1))) {
+    let timeSinceLastUse = null
+    console.log(`Test server: ${message.channel.guild.id}`)
+    console.log(`Stored test server: ${serverMap.TEST}`)
+    switch (message.channel.guild.id) {
+      case serverMap.TEST: timeSinceLastUse = Date.now() - wordOneLastUsed.TEST; wordOneLastUsed.TEST = Date.now(); break
+      case serverMap.OCB: timeSinceLastUse = Date.now() - wordOneLastUsed.OCB; wordOneLastUsed.OCB = Date.now(); break
+      case serverMap.DOP: timeSinceLastUse = Date.now() - wordOneLastUsed.DOP; wordOneLastUsed.DOP = Date.now(); break
+      default: console.log('Unknown server')
+    }
+    const timeString = convert.convertToString(timeSinceLastUse)
+    message.channel.send(`It has been ${timeString} since someone said ${process.env.WORD1}`)
     console.log('Slowpoke incoming')
     // Set message delay between 10 minutes to 60 minutes
     const delay = Math.floor(Math.random() * 3000000) + 600000

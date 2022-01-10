@@ -30,7 +30,7 @@ client.on('ready', async () => {
 client.on('messageCreate', message => {
   if (message.author.bot) {
     console.log('Bot message received.  Ignoring input.')
-  } else if (/^\d*d\d+/.test(message) && (message.channel == process.env.SERVER_OCB_DND || message.channel.guild == process.env.SERVER_TEST)) {
+  } else if (/^\d*d\d+/.test(message) && (message.channel.id === process.env.SERVER_OCB_DND || message.channel.guild.id === process.env.SERVER_TEST)) {
     client.commands.get('dnd').execute(message)
   } else if (!message.content.startsWith(prefix)) {
     client.commands.get('TextReact').execute(message)
