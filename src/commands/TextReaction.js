@@ -29,18 +29,60 @@ const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_ch
 
 let bottomCheckCounter = 0
 
-/* try {
-  if (existsSync('../textconfig.json')) {
-
+let wordData
+const OCBWordData = new Map()
+const DOPWordData = new Map()
+const TESTWordData = new Map()
+const wordDataLocation = '../worddata.json'
+try {
+  if (existsSync(wordDataLocation)) {
+    try {
+      const wordRawData = readFileSync(wordDataLocation)
+      wordData = JSON.parse(wordRawData)
+      console.log('Word data file read successfully:')
+      console.log(wordData)
+    } catch (err) {
+      console.error('There was an issue reading the word data file')
+      console.error(err.message)
+    }
   }
 } catch (err) {
-  console.error('TextReaction config file not found.  Creating a new one')
-} */
-
-const wordOneLastUsed = new Map()
-wordOneLastUsed.OCB = Date.now()
-wordOneLastUsed.DOP = Date.now()
-wordOneLastUsed.TEST = Date.now()
+  console.error('Word data config file not found.  Creating a new one')
+  const commandStartTime = Date.now()
+  const wordDataTemplate = {
+    OCB: [{
+      WORDONECOUNT: 0,
+      WORDONELASTUSED: commandStartTime,
+      WORDONELONGEST: 0
+    }],
+    DOP: [{
+      WORDONECOUNT: 0,
+      WORDONELASTUSED: commandStartTime,
+      WORDONELONGEST: 0
+    }],
+    TEST: [{
+      WORDONECOUNT: 0,
+      WORDONELASTUSED: commandStartTime,
+      WORDONELONGEST: 0
+    }]
+  }
+  const wordDataString = JSON.stringify(wordDataTemplate)
+  OCBWordData.wordOneCount = 0
+  OCBWordData.wordOneLastUsed = commandStartTime
+  OCBWordData.wordOneLongest = 0
+  DOPWordData.wordOneCount = 0
+  DOPWordData.wordOneLastUsed = commandStartTime
+  DOPWordData.wordOneLongest = 0
+  TESTWordData.wordOneCount = 0
+  TESTWordData.wordOneLastUsed = commandStartTime
+  TESTWordData.wordOneLongest = 0
+  try {
+    writeFile(wordDataLocation, wordDataString)
+  } catch (err) {
+    console.error('Issue creating word data json file')
+    console.error(err.message)
+  }
+}
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -148,9 +190,9 @@ export function execute (message) {
     console.log(`Test server: ${message.channel.guild.id}`)
     console.log(`Stored test server: ${serverMap.TEST}`)
     switch (message.channel.guild.id) {
-      case serverMap.TEST: timeSinceLastUse = Date.now() - wordOneLastUsed.TEST; wordOneLastUsed.TEST = Date.now(); break
-      case serverMap.OCB: timeSinceLastUse = Date.now() - wordOneLastUsed.OCB; wordOneLastUsed.OCB = Date.now(); break
-      case serverMap.DOP: timeSinceLastUse = Date.now() - wordOneLastUsed.DOP; wordOneLastUsed.DOP = Date.now(); break
+      case serverMap.TEST: timeSinceLastUse = Date.now() - TESTWordData.wordOneLastUsed; TESTWordData.wordOneLastUsed = Date.now(); break
+      case serverMap.OCB: timeSinceLastUse = Date.now() - OCBWordData.wordOneLastUsed; OCBWordData.wordOneLastUsed = Date.now(); break
+      case serverMap.DOP: timeSinceLastUse = Date.now() - DOPWordData.wordOneLastUsed; DOPWordData.wordOneLastUsed = Date.now(); break
       default: console.log('Unknown server')
     }
     const timeString = convert.convertToString(timeSinceLastUse)
