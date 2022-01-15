@@ -1,5 +1,5 @@
 import { MessageAttachment, MessageEmbed } from 'discord.js'
-import { readdirSync, readFileSync, writeFile, existsSync } from 'fs'
+import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
 import * as convert from '../lib/DateConvert.js'
 
 console.log('TextReaction.js: Setting serverMap')
@@ -17,6 +17,19 @@ userMap.ju1 = process.env.USER_JU1
 
 const contentDir = process.env.CONTENT_DIR
 
+let wordData
+const wordDataLocation = `${contentDir}/word_data/${process.env.WORDDATANAME}`
+console.log(`Attempting to read file: ${wordDataLocation}`)
+try {
+  accessSync(wordDataLocation)
+  const wordRawData = readFileSync(wordDataLocation)
+  wordData = JSON.parse(wordRawData)
+  console.log('Word data file read successfully')
+} catch (err) {
+  console.error('There was an issue reading the word data file')
+  console.error(err.message)
+}
+
 const bigOof = new MessageAttachment(`${contentDir}/images/oof.jpg`)
 const white = new MessageAttachment(`${contentDir}/images/white.jpg`)
 const suavemente = new MessageAttachment(`${contentDir}/images/suavemente.jpg`)
@@ -28,61 +41,6 @@ const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png
 const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.jpg`)
 
 let bottomCheckCounter = 0
-
-let wordData
-const OCBWordData = new Map()
-const DOPWordData = new Map()
-const TESTWordData = new Map()
-const wordDataLocation = '../worddata.json'
-try {
-  if (existsSync(wordDataLocation)) {
-    try {
-      const wordRawData = readFileSync(wordDataLocation)
-      wordData = JSON.parse(wordRawData)
-      console.log('Word data file read successfully:')
-      console.log(wordData)
-    } catch (err) {
-      console.error('There was an issue reading the word data file')
-      console.error(err.message)
-    }
-  }
-} catch (err) {
-  console.error('Word data config file not found.  Creating a new one')
-  const commandStartTime = Date.now()
-  const wordDataTemplate = {
-    OCB: [{
-      WORDONECOUNT: 0,
-      WORDONELASTUSED: commandStartTime,
-      WORDONELONGEST: 0
-    }],
-    DOP: [{
-      WORDONECOUNT: 0,
-      WORDONELASTUSED: commandStartTime,
-      WORDONELONGEST: 0
-    }],
-    TEST: [{
-      WORDONECOUNT: 0,
-      WORDONELASTUSED: commandStartTime,
-      WORDONELONGEST: 0
-    }]
-  }
-  const wordDataString = JSON.stringify(wordDataTemplate)
-  OCBWordData.wordOneCount = 0
-  OCBWordData.wordOneLastUsed = commandStartTime
-  OCBWordData.wordOneLongest = 0
-  DOPWordData.wordOneCount = 0
-  DOPWordData.wordOneLastUsed = commandStartTime
-  DOPWordData.wordOneLongest = 0
-  TESTWordData.wordOneCount = 0
-  TESTWordData.wordOneLastUsed = commandStartTime
-  TESTWordData.wordOneLongest = 0
-  try {
-    writeFile(wordDataLocation, wordDataString)
-  } catch (err) {
-    console.error('Issue creating word data json file')
-    console.error(err.message)
-  }
-}
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -189,12 +147,15 @@ export function execute (message) {
     let timeSinceLastUse = null
     console.log(`Test server: ${message.channel.guild.id}`)
     console.log(`Stored test server: ${serverMap.TEST}`)
-    switch (message.channel.guild.id) {
-      case serverMap.TEST: timeSinceLastUse = Date.now() - TESTWordData.wordOneLastUsed; TESTWordData.wordOneLastUsed = Date.now(); break
-      case serverMap.OCB: timeSinceLastUse = Date.now() - OCBWordData.wordOneLastUsed; OCBWordData.wordOneLastUsed = Date.now(); break
-      case serverMap.DOP: timeSinceLastUse = Date.now() - DOPWordData.wordOneLastUsed; DOPWordData.wordOneLastUsed = Date.now(); break
-      default: console.log('Unknown server')
+    const serverId = message.channel.guild.id
+    console.log(`Word last used: ${wordData[serverId].WORDONELASTUSED}`)
+    timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
+    if (timeSinceLastUse > wordData[serverId].WORDONELONGEST) {
+      wordData[serverId].WORDONELONGEST = timeSinceLastUse
     }
+    wordData[serverId].WORDONELASTUSED = Date.now()
+    wordData[serverId].WORDONECOUNT += 1
+    writeFileSync(wordDataLocation, JSON.stringify(wordData))
     const timeString = convert.convertToString(timeSinceLastUse)
     message.channel.send(`It has been ${timeString} since someone said ${process.env.WORD1}`)
     console.log('Slowpoke incoming')
@@ -207,19 +168,19 @@ export function execute (message) {
 
 export function report (message) {
   console.log(`Report requested for ${message.channel.guild.name}`)
+  const serverId = message.channel.guild.id
   // Word one
-  let timeSinceLastUse = null
-  switch (message.channel.guild.id) {
-    case serverMap.TEST: timeSinceLastUse = Date.now() - wordOneLastUsed.TEST; break
-    case serverMap.OCB: timeSinceLastUse = Date.now() - wordOneLastUsed.OCB; break
-    case serverMap.DOP: timeSinceLastUse = Date.now() - wordOneLastUsed.DOP; break
-    default: console.log('Unknown server')
-  }
-  const timeString = convert.convertToString(timeSinceLastUse)
+  const timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
+  const longestTime = wordData[serverId].WORDONELONGEST
+  const lastUsedString = convert.convertToString(timeSinceLastUse)
+  const longestTimeString = convert.convertToString(longestTime)
+  const timesUsed = wordData[serverId].WORDONECOUNT
   const reportEmbed = new MessageEmbed()
     .setColor('#ff0000')
     .setTitle(`Metrics for ${message.channel.guild.name}`)
-  const wordOneString = `It has been ${timeString} since someone said ${process.env.WORD1}`
+  let wordOneString = `It has been ${lastUsedString} since someone said ${process.env.WORD1}`
+  wordOneString += `\nThe record for not saying ${process.env.WORD1} is ${longestTimeString}`
+  wordOneString += `\n${process.env.WORD1} has been said ${timesUsed} times`
   reportEmbed.addField(process.env.WORD1, wordOneString)
   message.channel.send({ embeds: [reportEmbed] })
 }
