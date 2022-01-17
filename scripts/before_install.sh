@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Install required libraries
 sudo apt update
 sudo apt install -y ruby
 sudo apt install -y wget
