@@ -19,11 +19,12 @@ export function execute (message) {
   for (const rollRequest of input) {
     let rollResult = ''
     let rollSum = 0
+    let modifier = 0
     let rollNumbers = rollRequest
     console.log('NOW ROLLING: ' + rollRequest)
     if (/\+\d/.test(rollRequest)) {
       const rawModifier = rollRequest.split('+')
-      const modifier = rawModifier[1]
+      modifier = rawModifier[1]
       rollNumbers = rawModifier[0]
       result.addField('Modifier', modifier)
       rollSum += parseInt(modifier)
@@ -38,12 +39,10 @@ export function execute (message) {
         for (let roll = 0; roll < rawNumbers[0]; roll++) {
           const rolledNumber = rollDice(rawNumbers[1])
           rollResult = rollResult + (rolledNumber + '\n')
-          if (rawNumbers[0] > 1) {
-            rollSum += rolledNumber
-          }
+          rollSum += rolledNumber
         }
         result.addField(rollNumbers, rollResult.toString())
-        if (rollSum !== 0) {
+        if (modifier > 0 || rawNumbers[0] > 1) {
           result.addField('Total:', rollSum.toString())
         }
       }
