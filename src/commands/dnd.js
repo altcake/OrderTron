@@ -19,9 +19,17 @@ export function execute (message) {
   for (const rollRequest of input) {
     let rollResult = ''
     let rollSum = 0
+    let rollNumbers = rollRequest
     console.log('NOW ROLLING: ' + rollRequest)
+    if (/\+\d/.test(rollRequest)) {
+      const rawModifier = rollRequest.split('+')
+      const modifier = rawModifier[1]
+      rollNumbers = rawModifier[0]
+      result.addField('Modifier', modifier)
+      rollSum += parseInt(modifier)
+    }
     if (/^\d+d\d+/.test(rollRequest)) {
-      const rawNumbers = rollRequest.split('d')
+      const rawNumbers = rollNumbers.split('d')
       console.log('Raw Numbers: ' + rawNumbers)
       if (rawNumbers[0] > 350) {
         console.log('Requested roll was too high: ' + rawNumbers[0])
@@ -33,19 +41,22 @@ export function execute (message) {
           if (rawNumbers[0] > 1) {
             rollSum += rolledNumber
           }
-          // console.log(rollResult)
         }
-        result.addField(rollRequest, rollResult.toString())
+        result.addField(rollNumbers, rollResult.toString())
         if (rollSum !== 0) {
           result.addField('Total:', rollSum.toString())
         }
       }
-    } else if (/d\d+/.test(rollRequest)) {
-      const sides = rollRequest.slice(1)
-      // console.log(sides)
+    } else if (/d\d+/.test(rollNumbers)) {
+      const sides = rollNumbers.slice(1)
       rollResult = rollDice(sides)
-      // console.log(rollResult)
-      result.addField(rollRequest, rollResult.toString())
+      rollSum += parseInt(rollResult)
+      console.log(rollResult)
+      console.log(rollSum)
+      result.addField(rollNumbers, rollResult.toString())
+      if (rollSum > rollResult) {
+        result.addField('Total: ', rollSum.toString())
+      }
     } else {
       result.addField(rollRequest, 'I have no idea what you just tried to do...')
     }
