@@ -1,6 +1,6 @@
 {
   "name": "ordertron",
-  "version": "2.6.17",
+  "version": "2.6.18",
   "description": "Restoring absolute tranquility",
   "type": "module",
   "main": "src/main.js",
@@ -12,20 +12,19 @@
   "author": "Ara Malayan",
   "license": "MIT",
   "dependencies": {
-    "canvas": "^2.8.0",
-    "discord.js": "^13.3.1",
-    "dotenv": "^10.0.0",
+    "canvas": "^2.9.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.2.0",
     "node-cron": "^3.0.0",
-    "node-fetch": "^3.0.0",
-    "twitter-api-v2": "^1.6.5"
+    "node-fetch": "^3.2.0",
+    "twitter-api-v2": "^1.9.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint": "^8.7.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.2.0",
-    "exiftool-vendored": "^15.6.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "exiftool-vendored": "^15.10.1",
     "syno": "^2.2.0"
   }
 }
