@@ -20,16 +20,16 @@ export function execute (message) {
     let rollResult = ''
     let rollSum = 0
     let modifier = 0
-    let rollNumbers = rollRequest
+    let rollNumbers = rollRequest.toLowerCase()
     console.log('NOW ROLLING: ' + rollRequest)
-    if (/\+\d/.test(rollRequest)) {
-      const rawModifier = rollRequest.split('+')
+    if (/\+\d/.test(rollNumbers)) {
+      const rawModifier = rollNumbers.split('+')
       modifier = rawModifier[1]
       rollNumbers = rawModifier[0]
       result.addField('Modifier', modifier)
       rollSum += parseInt(modifier)
     }
-    if (/^\d+d\d+/.test(rollRequest)) {
+    if (/^\d+d\d+/.test(rollNumbers)) {
       const rawNumbers = rollNumbers.split('d')
       console.log('Raw Numbers: ' + rawNumbers)
       if (rawNumbers[0] > 350) {
