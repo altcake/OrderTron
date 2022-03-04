@@ -160,8 +160,15 @@ export function execute (message) {
     const serverId = message.channel.guild.id
     console.log(`Word last used: ${wordData[serverId].WORDONELASTUSED}`)
     timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
+    // If time is greater than 1 week, send special message
+    if (timeSinceLastUse >= 604800000) {
+      message.channel.send('Wow, such restraint')
+      message.channel.send('https://www.youtube.com/watch?v=fC_q9KPczAg')
+    }
+    // If time is greater than current longest time, set current time to longest time
     if (timeSinceLastUse > wordData[serverId].WORDONELONGEST) {
       wordData[serverId].WORDONELONGEST = timeSinceLastUse
+      message.channel.send('https://www.youtube.com/watch?v=S53fZTbKHG0')
     }
     wordData[serverId].WORDONELASTUSED = Date.now()
     wordData[serverId].WORDONECOUNT += 1
