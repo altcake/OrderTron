@@ -1,6 +1,6 @@
 {
   "name": "ordertron",
-  "version": "2.7.5",
+  "version": "2.7.6",
   "description": "Restoring absolute tranquility",
   "type": "module",
   "main": "src/main.js",
@@ -24,8 +24,6 @@
     "eslint": "^8.12.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "exiftool-vendored": "^16.1.0",
-    "syno": "^2.2.0"
+    "eslint-plugin-promise": "^6.0.0"
   }
 }
