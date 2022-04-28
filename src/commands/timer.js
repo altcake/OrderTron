@@ -16,6 +16,7 @@ twitterUserMap.fridayKiller7 = '1213846076534341638'
 twitterUserMap.fridayLynch = '1355278398571106306'
 twitterUserMap.thursdayOOT = '1230723636769644544'
 twitterUserMap.wednesdayWii = '1333567603093200898'
+twitterUserMap.wednesdayWhat = '1205150923934306304'
 twitterUserMap.thursdayFeliz = '1304044685351059459'
 twitterUserMap.fridayPacific = '1442289929808084992'
 
@@ -55,7 +56,9 @@ async function wednesday (channel) {
   console.log("It's Wednesday!!!")
   const wednesdayList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.wednesdayWii)
+  const TweetLink2 = await getLatestTweet(twitterUserMap.wednesdayWhat)
   wednesdayList.push(TweetLink1)
+  wednesdayList.push(TweetLink2)
   for (const message of wednesdayList) {
     sendMessage(channel, message)
   }
