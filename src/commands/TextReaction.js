@@ -162,84 +162,54 @@ export function execute (message) {
     timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
     // Weekly reward series
     // Set new timed reactions in order from longest to shortest
-    // If time is greater than 35 days, send special message
-    if (timeSinceLastUse >= 3024000000) {
-      message.channel.send('35 DAYS????????')
-      message.channel.send('https://www.youtube.com/watch?v=tG35R8F2j8k')
-    }
-    // If time is greater than 2 weeks, send special message
-    if (timeSinceLastUse >= 1209600000) {
-      message.channel.send('Two weeks?  Seriously?')
-      message.channel.send('https://www.youtube.com/watch?v=Mcfk3KFhIZg')
-    }
-    // If time is greater than 1 week, send special message
-    else if (timeSinceLastUse >= 604800000) {
-      message.channel.send('Wow, going a whole week.  Such restraint.')
-      message.channel.send('https://www.youtube.com/watch?v=fC_q9KPczAg')
+    switch (timeSinceLastUse) {
+      // If time is greater than 35 days, send special message
+      case (timeSinceLastUse >= 3024000000): message.channel.send('35 DAYS????????'); message.channel.send('https://www.youtube.com/watch?v=tG35R8F2j8k'); break
+      // If time is greater than 2 weeks, send special message
+      case (timeSinceLastUse >= 1209600000): message.channel.send('Two weeks?  Seriously?'); message.channel.send('https://www.youtube.com/watch?v=Mcfk3KFhIZg'); break
+      // If time is greater than 1 week, send special message
+      case (timeSinceLastUse >= 604800000): message.channel.send('Wow, going a whole week.  Such restraint.'); message.channel.send('https://www.youtube.com/watch?v=fC_q9KPczAg'); break
     }
     
     // Daily reward series
     // Set new timed reactions in order from longest to shortest
-    // If time is greater than 52 days, send special message
-    if (timeSinceLastUse >= 4492800000) {
-      message.channel.send('https://www.youtube.com/watch?v=XVxO6fKtrw4')
+    switch (timeSinceLastUse) {
+      // If time is greater than 52 days, send special message
+      case (timeSinceLastUse >= 4492800000): message.channel.send('https://www.youtube.com/watch?v=XVxO6fKtrw4'); break
+      // If time is greater than 31 days, send special message
+      case (timeSinceLastUse >= 2678400000): message.channel.send('https://www.youtube.com/watch?v=rcTIq5mtRRM'); break
+      // If time is greater than 28 days, send special message
+      case (timeSinceLastUse >= 2419200000): message.channel.send('https://www.youtube.com/watch?v=DbwlGv9SWfY'); break
+      // If time is greater than 22 days, send special message
+      case (timeSinceLastUse >= 1900800000): message.channel.send('https://www.youtube.com/watch?v=AgFeZr5ptV8'); break
+      // If time is greater than 16 days, send special message
+      case (timeSinceLastUse >= 1382400000): message.channel.send('https://www.youtube.com/watch?v=7dtptXFjjB0'); break
+      // If time is greater than 13 days, send special message
+      case (timeSinceLastUse >= 1123200000): message.channel.send('https://www.youtube.com/watch?v=vBPTP2rCzag'); break
+      // If time is greater than 11 days, send special message
+      case (timeSinceLastUse >= 950400000): message.channel.send('https://www.youtube.com/watch?v=ViYANtHJfss'); break
+      // If time is greater than 9 days, send special message
+      case (timeSinceLastUse >= 777600000): message.channel.send('https://www.youtube.com/watch?v=ZIANBamMgas'); break
+      // If time is greater than 8 days, send special message
+      case (timeSinceLastUse >= 691200000): message.channel.send('https://www.youtube.com/watch?v=kle2xHhRHg4'); break
+      // If time is greater than 6 days, send special message
+      case (timeSinceLastUse >= 518400000): message.channel.send('https://www.youtube.com/watch?v=eY-eyZuW_Uk'); break
+      // If time is greater than 3 days, send special message
+      case (timeSinceLastUse >= 259200000): message.channel.send('https://www.youtube.com/watch?v=d8ekz_CSBVg'); break
+      // If time is greater than 1 day, send special message
+      case (timeSinceLastUse >= 86400000): message.channel.send('https://www.youtube.com/watch?v=gJxjt_JgtYU'); break
+      // If time is greater than 16 hours, send special message
+      case (timeSinceLastUse >= 57600000): message.channel.send('https://www.youtube.com/watch?v=QrFagM58ang'); break
+      // If time is greater than 5 hours, send special message
+      case (timeSinceLastUse >= 18000000): message.channel.send('https://www.youtube.com/watch?v=K_yBUfMGvzc'); break
+      // If time is greater than 20 minutes, send special message
+      case (timeSinceLastUse >= 1200000): message.channel.send('https://www.youtube.com/watch?v=bnFa4Mq5PAM'); break
+      // If time is greater than 5 minutes, send special message
+      case (timeSinceLastUse >= 300000): message.channel.send('https://www.youtube.com/watch?v=sqM3APrfijU'); break
+      // If time is greater than 45 seconds, send special message
+      case (timeSinceLastUse >= 45000): message.channel.send('https://www.youtube.com/watch?v=kt0g4dWxEBo'); break
     }
-    // If time is greater than 31 days, send special message
-    else if (timeSinceLastUse >= 2678400000) {
-      message.channel.send('https://www.youtube.com/watch?v=rcTIq5mtRRM')
-    }
-    // If time is greater than 28 days, send special message
-    else if (timeSinceLastUse >= 2419200000) {
-      message.channel.send('https://www.youtube.com/watch?v=DbwlGv9SWfY')
-    }
-    // If time is greater than 22 days, send special message
-    else if (timeSinceLastUse >= 1900800000) {
-      message.channel.send('https://www.youtube.com/watch?v=AgFeZr5ptV8')
-    }
-    // If time is greater than 16 days, send special message
-    else if (timeSinceLastUse >= 1382400000) {
-      message.channel.send('https://www.youtube.com/watch?v=7dtptXFjjB0')
-    }
-    // If time is greater than 13 days, send special message
-    else if (timeSinceLastUse >= 1123200000) {
-      message.channel.send('https://www.youtube.com/watch?v=vBPTP2rCzag')
-    }
-    // If time is greater than 11 days, send special message
-    else if (timeSinceLastUse >= 950400000) {
-      message.channel.send('https://www.youtube.com/watch?v=ViYANtHJfss')
-    }
-    // If time is greater than 9 days, send special message
-    else if (timeSinceLastUse >= 777600000) {
-      message.channel.send('https://www.youtube.com/watch?v=ZIANBamMgas')
-    }
-    // If time is greater than 8 days, send special message
-    else if (timeSinceLastUse >= 691200000) {
-      message.channel.send('https://www.youtube.com/watch?v=kle2xHhRHg4')
-    }
-    // If time is greater than 6 days, send special message
-    else if (timeSinceLastUse >= 518400000) {
-      message.channel.send('https://www.youtube.com/watch?v=eY-eyZuW_Uk')
-    }
-    // If time is greater than 3 days, send special message
-    else if (timeSinceLastUse >= 259200000) {
-      message.channel.send('https://www.youtube.com/watch?v=d8ekz_CSBVg')
-    }
-    // If time is greater than 1 day, send special message
-    else if (timeSinceLastUse >= 86400000) {
-      message.channel.send('https://www.youtube.com/watch?v=gJxjt_JgtYU')
-    }
-    // If time is greater than 20 minutes, send special message
-    else if (timeSinceLastUse >= 1200000) {
-      message.channel.send('https://www.youtube.com/watch?v=bnFa4Mq5PAM')
-    }
-    // If time is greater than 5 minutes, send special message
-    else if (timeSinceLastUse >= 300000) {
-      message.channel.send('https://www.youtube.com/watch?v=sqM3APrfijU')
-    }
-    // If time is greater than 45 seconds, send special message
-    else if (timeSinceLastUse >= 45000) {
-      message.channel.send('https://www.youtube.com/watch?v=kt0g4dWxEBo')
-    }
+
     // If time is greater than current longest time, set current time to longest time
     if (timeSinceLastUse > wordData[serverId].WORDONELONGEST) {
       wordData[serverId].WORDONELONGEST = timeSinceLastUse
