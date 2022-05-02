@@ -162,7 +162,7 @@ export function execute (message) {
     timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
     // Weekly reward series
     // Set new timed reactions in order from longest to shortest
-    switch (timeSinceLastUse) {
+    switch (true) {
       // If time is greater than 35 days, send special message
       case (timeSinceLastUse >= 3024000000): message.channel.send('35 DAYS????????'); message.channel.send('https://www.youtube.com/watch?v=tG35R8F2j8k'); break
       // If time is greater than 2 weeks, send special message
@@ -173,7 +173,7 @@ export function execute (message) {
     
     // Daily reward series
     // Set new timed reactions in order from longest to shortest
-    switch (timeSinceLastUse) {
+    switch (true) {
       // If time is greater than 52 days, send special message
       case (timeSinceLastUse >= 4492800000): message.channel.send('https://www.youtube.com/watch?v=XVxO6fKtrw4'); break
       // If time is greater than 31 days, send special message
