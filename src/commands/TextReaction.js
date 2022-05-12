@@ -41,6 +41,7 @@ const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png
 const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.jpg`)
 const badmanCheck = new MessageAttachment(`${contentDir}/images/badman_check.png`)
 const chaosCheck = new MessageAttachment(`${contentDir}/images/chaos_check.jpg`)
+const reboCheck = new MessageAttachment(`${contentDir}/images/rebo_check.jpg`)
 
 let bottomCheckCounter = 0
 
@@ -145,6 +146,10 @@ export function execute (message) {
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('chaos check')) {
     console.log('CHAOS CHECK')
     message.channel.send({ files: [chaosCheck] })
+  }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('rebo check')) {
+    console.log('REBO CHECK')
+    message.channel.send({ files: [reboCheck] })
   }
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
     console.log('GOT DAMN')
