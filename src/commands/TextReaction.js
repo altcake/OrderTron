@@ -79,7 +79,7 @@ export function execute (message) {
   console.log('Activity from user: ' + message.member.displayName)
   console.log('Message received: ' + message.content)
 
-  if ((message.content.toLowerCase().match(/(?:^| )let'?s/) && message.content.toLowerCase().includes(' go')) || message.content.toLowerCase().includes('lfg')) {
+  if ((message.content.toLowerCase().match(/(?:^| )let'?s.* go/)) || message.content.toLowerCase().includes('lfg')) {
     console.log("LET'S GOOOOOOOO")
     const letsGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
     message.channel.send({ files: [letsGo] })
