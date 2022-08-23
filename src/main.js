@@ -48,6 +48,7 @@ client.on('messageCreate', message => {
       case 'timer': client.commands.get('timer').execute(message, args); break
       case 'nick': client.commands.get('nick').execute(message, args); break
       case 'report': client.commands.get('TextReact').report(message); break
+      case 'maintenance': client.commands.get('Maintenance').execute(message, args); break
       default: message.channel.send({ content: '(┛◉Д◉)┛彡┻━┻\ncease your activities' })
     }
   }
