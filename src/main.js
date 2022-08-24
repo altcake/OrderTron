@@ -54,4 +54,8 @@ client.on('messageCreate', message => {
   }
 })
 
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error)
+})
+
 client.login(process.env.DISCORD_API_KEY)
