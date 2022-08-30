@@ -1,6 +1,5 @@
 import fs from 'fs'
-import pkg from 'canvas'
-const { createCanvas, loadImage } = pkg
+import { createCanvas, loadImage } from '@napi-rs/canvas'
 
 const brLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
 const ggLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
@@ -31,7 +30,7 @@ async function mergeImages (image, logoFile, mode) {
   console.log('Canvas created')
   const context = canvas.getContext('2d')
   context.drawImage(background, 0, 0, background.width, background.height)
-  // Ensure the logo has a 1:1 aspect ratio
+  // Ensure the logo retains original aspect ratio
   let logoSize = background.width
   if (background.width > background.height) {
     logoSize = background.height
