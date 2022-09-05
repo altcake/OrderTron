@@ -37,6 +37,7 @@ client.on('messageCreate', message => {
   } else {
     const args = message.content.slice(prefix.length).split(' ')
     const command = args.shift().toLowerCase()
+    console.log(args)
 
     switch (command) {
       case 'enforce': client.commands.get('enforce').execute(message, args); break
@@ -49,6 +50,7 @@ client.on('messageCreate', message => {
       case 'nick': client.commands.get('nick').execute(message, args); break
       case 'report': client.commands.get('TextReact').report(message); break
       case 'maintenance': client.commands.get('Maintenance').execute(message, args); break
+      case 'fightcade': client.commands.get('fightcade').execute(message, args); break
       default: message.channel.send({ content: '(┛◉Д◉)┛彡┻━┻\ncease your activities' })
     }
   }
