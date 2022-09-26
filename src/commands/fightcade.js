@@ -5,7 +5,7 @@ import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
 const contentDir = process.env.CONTENT_DIR
 
 console.log('fightcase.js: Reading FC user data')
-let fcUsers
+let fcUsers = {}
 const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
 console.log(`Attempting to read file: ${fcUsersLocation}`)
 try {
@@ -32,17 +32,26 @@ async function getUser(username) {
 }
 
 function register(discordId, discordUsername, fcUsername) {
-  const newUser = {
-    'DiscordName': discordUsername,
-    'FCUsername': fcUsername
-  }
-  fcUsers.push(discordId)
-  fcUsers[discordId] = newUser
+  let newUser = `${discordId}`
+  fcUsers[newUser].DiscordName = discordUsername
+  fcUsers[newUser].FCUsername = fcUsername
+  // const newUserData = {
+  //   'DiscordName': discordUsername,
+  //   'FCUsername': fcUsername
+  // }
+  fcUsers[newUser].push(newUserData)
+  //fcUsers[discordId] = newUser
   console.log(discordId)
   console.log(fcUsers[discordId])
+  console.log(fcUsers[discordId].DiscordName)
+  try {
+    writeFileSync(fcUsersLocation, JSON.stringify(fcUsers))
+    console.log('FC user file written successfully')
+  } catch (err) {
+    console.error('There was an issue reading the FC user file')
+    console.error(err.message)
+  }
 }
-
-getUser('altcake')
 
 export const name = 'fightcade'
 export const description = 'Climb the tower in old games'
@@ -50,5 +59,11 @@ export function execute (message, args) {
   if (args[0] == 'register') {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)
     register(message.author.id, message.author.username, args[1])
+  }
+  else {
+    let userId = message.author.id.toString()
+    console.log(userId)
+    console.log(fcUsers[userId].FCUsername)
+    getUser(fcUsers[userId].FCUsername)
   }
 }

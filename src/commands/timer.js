@@ -19,6 +19,7 @@ twitterUserMap.thursdayOOT = '1230723636769644544'
 twitterUserMap.wednesdayWhat = '1205150923934306304'
 twitterUserMap.thursdayFeliz = '1304044685351059459'
 twitterUserMap.fridayPacific = '1442289929808084992'
+twitterUserMap.tuesdayOnly = '1544291583608201216'
 
 const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/1422171069306265600'
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
@@ -48,6 +49,16 @@ async function monday (channel) {
   mondayList.push(mondayMisatoInstagram)
   mondayList.push(mondayMisatoTwitter)
   for (const message of mondayList) {
+    sendMessage(channel, message)
+  }
+}
+
+async function tuesday (channel) {
+  console.log("It's Tuesday!!!")
+  const tuesdayList = []
+  const TweetLink1 = await getLatestTweet(twitterUserMap.tuesdayOnly)
+  mondayList.push(TweetLink1)
+  for (const message of tuesdayList) {
     sendMessage(channel, message)
   }
 }
@@ -102,6 +113,12 @@ function setSchedules () {
     scheduled: true,
     timezone: 'America/Los_Angeles'
   })
+  schedule('0 9 * * 2', () => {
+    tuesday(process.env.SERVER_OCB_GENERAL)
+  }, {
+    scheduled: true,
+    timezone: 'America/Los_Angeles'
+  })
   schedule('0 9 * * 3', () => {
     wednesday(process.env.SERVER_OCB_GENERAL)
   }, {
@@ -148,6 +165,9 @@ export async function execute (message, args) {
   switch (args[0]) {
     case 'monday':
       monday(process.env.SERVER_TEST_GENERAL)
+      break
+    case 'tuesday':
+      tuesday(process.env.SERVER_TEST_GENERAL)
       break
     case 'wednesday':
       wednesday(process.env.SERVER_TEST_GENERAL)
