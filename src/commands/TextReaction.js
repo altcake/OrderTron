@@ -190,6 +190,8 @@ export function execute (message) {
     // Daily reward series
     // Set new timed reactions in order from longest to shortest
     switch (true) {
+      // If time is greater than 10,000 hours (~416.66 days), send special message
+      case (timeSinceLastUse >= 36000000000): message.channel.send('https://www.youtube.com/watch?v=lxZPNXRT2fQ'); break
       // If time is greater than 52 days, send special message
       case (timeSinceLastUse >= 4492800000): message.channel.send('https://www.youtube.com/watch?v=XVxO6fKtrw4'); break
       // If time is greater than 31 days, send special message
@@ -198,6 +200,8 @@ export function execute (message) {
       case (timeSinceLastUse >= 2419200000): message.channel.send('https://www.youtube.com/watch?v=DbwlGv9SWfY'); break
       // If time is greater than 22 days, send special message
       case (timeSinceLastUse >= 1900800000): message.channel.send('https://www.youtube.com/watch?v=AgFeZr5ptV8'); break
+      // If time is greater than 18 days, send special message
+      case (timeSinceLastUse >= 1555200000): message.channel.send('https://www.youtube.com/watch?v=1ncpxEmxAh8'); break
       // If time is greater than 16 days, send special message
       case (timeSinceLastUse >= 1382400000): message.channel.send('https://www.youtube.com/watch?v=7dtptXFjjB0'); break
       // If time is greater than 13 days, send special message
@@ -210,6 +214,8 @@ export function execute (message) {
       case (timeSinceLastUse >= 691200000): message.channel.send('https://www.youtube.com/watch?v=kle2xHhRHg4'); break
       // If time is greater than 6 days, send special message
       case (timeSinceLastUse >= 518400000): message.channel.send('https://www.youtube.com/watch?v=eY-eyZuW_Uk'); break
+      // If time is greater than 5 days, send special message
+      case (timeSinceLastUse >= 432000000): message.channel.send('https://www.youtube.com/watch?v=5WO5jZ0Uzds'); break
       // If time is greater than 3 days, send special message
       case (timeSinceLastUse >= 259200000): message.channel.send('https://www.youtube.com/watch?v=d8ekz_CSBVg'); break
       // If time is greater than 1 day, send special message
@@ -218,6 +224,12 @@ export function execute (message) {
       case (timeSinceLastUse >= 57600000): message.channel.send('https://www.youtube.com/watch?v=QrFagM58ang'); break
       // If time is greater than 5 hours, send special message
       case (timeSinceLastUse >= 18000000): message.channel.send('https://www.youtube.com/watch?v=K_yBUfMGvzc'); break
+      // If time is greater than 4 hours, send special message
+      case (timeSinceLastUse >= 14400000): message.channel.send('https://www.youtube.com/watch?v=-zKOhVSERS8'); break
+      // If time is greater than 2 hours, send special message
+      case (timeSinceLastUse >= 7200000): message.channel.send('https://www.youtube.com/watch?v=E9mnzzvNjKs'); break
+      // If time is greater than 1 hour, send special message
+      case (timeSinceLastUse >= 3600000): message.channel.send('https://www.youtube.com/watch?v=wtbzHpz2SCg'); break
       // If time is greater than 20 minutes, send special message
       case (timeSinceLastUse >= 1200000): message.channel.send('https://www.youtube.com/watch?v=bnFa4Mq5PAM'); break
       // If time is greater than 5 minutes, send special message
@@ -248,17 +260,21 @@ export function report (message) {
   console.log(`Report requested for ${message.channel.guild.name}`)
   const serverId = message.channel.guild.id
   // Word one
-  const timeSinceLastUse = Date.now() - wordData[serverId].WORDONELASTUSED
+  const currentTime = Date.now()
+  const timeSinceLastUse = currentTime - wordData[serverId].WORDONELASTUSED
   const longestTime = wordData[serverId].WORDONELONGEST
   const lastUsedString = convert.convertToString(timeSinceLastUse)
   const longestTimeString = convert.convertToString(longestTime)
   const timesUsed = wordData[serverId].WORDONECOUNT
+  const averageTime = (currentTime - process.env.WORD1STARTDATE) / timesUsed
+  const averageTimeString = convert.convertToString(averageTime)
   const reportEmbed = new MessageEmbed()
     .setColor('#ff0000')
     .setTitle(`Metrics for ${message.channel.guild.name}`)
   let wordOneString = `It has been ${lastUsedString} since someone said ${process.env.WORD1}`
   wordOneString += `\nThe record for not saying ${process.env.WORD1} is ${longestTimeString}`
   wordOneString += `\n${process.env.WORD1} has been said ${timesUsed} times`
+  wordOneString += `\nThe average time between uses of ${process.env.WORD1} is ${averageTimeString}`
   reportEmbed.addField(process.env.WORD1, wordOneString)
   message.channel.send({ embeds: [reportEmbed] })
 }
