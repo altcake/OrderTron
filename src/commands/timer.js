@@ -57,7 +57,7 @@ async function tuesday (channel) {
   console.log("It's Tuesday!!!")
   const tuesdayList = []
   const TweetLink1 = await getLatestTweet(twitterUserMap.tuesdayOnly)
-  mondayList.push(TweetLink1)
+  tuesdayList.push(TweetLink1)
   for (const message of tuesdayList) {
     sendMessage(channel, message)
   }
