@@ -193,7 +193,10 @@ export function execute (message) {
       message.channel.send({ files: [gotDamn] })
     }
   }
-  if (message.content.toLowerCase().includes('brown')) {
+  if (message.content.toLowerCase().match(/i'?m gonna brown/)) {
+    console.log("I'M GONNA BROWN")
+    message.channel.send('https://www.youtube.com/shorts/Kn-sfB5OSKg')
+  } else if (message.content.toLowerCase().includes('brown')) {
     console.log('BROWN')
     const brownObject = brownLinks[Math.floor(Math.random() * brownLinks.length)]
     if (brownObject.toLowerCase().match(/^http/)) {
