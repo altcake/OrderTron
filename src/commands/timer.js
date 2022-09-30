@@ -15,7 +15,6 @@ twitterUserMap.fridayYakuza = '1165068053786312704'
 twitterUserMap.fridayKiller7 = '1213846076534341638'
 twitterUserMap.fridayLynch = '1355278398571106306'
 twitterUserMap.thursdayOOT = '1230723636769644544'
-//twitterUserMap.wednesdayWii = '1333567603093200898'
 twitterUserMap.wednesdayWhat = '1205150923934306304'
 twitterUserMap.thursdayFeliz = '1304044685351059459'
 twitterUserMap.fridayPacific = '1442289929808084992'
@@ -25,7 +24,7 @@ const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/142217106930
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
 const mondayMisatoTwitter = 'https://twitter.com/Misato_Mondays/status/1442611071022338050'
 
-const thursdayPotato = new MessageAttachment(`${contentDir}/images/timer/thursday/20210225_103521.jpg`)
+const thursdayPotato = new MessageAttachment(`${contentDir}/images/timer/thursday/SPOILER_20210225_103521.jpg`)
 
 async function getLatestTweet (accountId) {
   const accountTweets = await twitterClient.get(`https://api.twitter.com/2/users/${accountId}/tweets?max_results=5`)

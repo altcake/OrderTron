@@ -51,6 +51,7 @@ client.on('messageCreate', message => {
       case 'report': client.commands.get('TextReact').report(message); break
       case 'maintenance': client.commands.get('Maintenance').execute(message, args); break
       case 'fightcade': client.commands.get('fightcade').execute(message, args); break
+      case 'brownadd': client.commands.get('TextReact').addLink(message, args, 'brown'); break
       default: message.channel.send({ content: '(┛◉Д◉)┛彡┻━┻\ncease your activities' })
     }
   }

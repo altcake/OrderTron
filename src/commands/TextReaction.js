@@ -1,5 +1,5 @@
 import { MessageAttachment, MessageEmbed } from 'discord.js'
-import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
+import { readdirSync, readFileSync, accessSync, writeFileSync, appendFileSync } from 'fs'
 import * as convert from '../lib/DateConvert.js'
 
 console.log('TextReaction.js: Setting serverMap')
@@ -71,6 +71,30 @@ for (const file of stonksList) {
   stonksFiles.push(`${contentDir}/images/stonks/${file}`)
 }
 
+const brownFileList = readdirSync(`${contentDir}/media/brown/`).filter(file => file.endsWith('.mp4'))
+const brownLinkFile = `${contentDir}/media/brown/brown_links.txt`
+let brownLinks = []
+try {
+  const data = readFileSync(brownLinkFile, 'UTF-8')
+  brownLinks = data.split(/\r?\n/)
+  brownLinks.forEach((line) => {
+      console.log(line)
+  })
+} catch (err) {
+  console.error(err)
+}
+for (const file of brownFileList) {
+  console.log(`${contentDir}/media/brown/${file}`)
+  brownLinks.push(`${contentDir}/media/brown/${file}`)
+}
+
+function selectMode (mode) {
+  switch (mode) {
+    case 'brown': return {file:brownLinkFile, object:brownLinks}
+    default: return {file:brownLinkFile, object:brownLinks}
+  }
+}
+
 export const name = 'TextReact'
 export const description = 'Eye for an eye.'
 export function execute (message) {
@@ -132,7 +156,7 @@ export function execute (message) {
       console.log(`Counter value: ${brotherCheckCounter}`)
       setTimeout(() => { brotherCheckCounter = 0 }, 600000)
     } else if (brotherCheckCounter >= 6) {
-      console.log('SUFFICIENT BOTTOM SUPPORT HAS BEEN REACHED')
+      console.log('SUFFICIENT BROTHER SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [brotherCheckSuccess] })
       bottomCheckCounter = 0
     }
@@ -167,6 +191,15 @@ export function execute (message) {
     const number = Math.random()
     if (number < 0.4) {
       message.channel.send({ files: [gotDamn] })
+    }
+  }
+  if (message.content.toLowerCase().includes('brown')) {
+    console.log('BROWN')
+    const brownObject = brownLinks[Math.floor(Math.random() * brownLinks.length)]
+    if (brownObject.toLowerCase().match(/^http/)) {
+      message.channel.send(brownObject)
+    } else {
+      message.channel.send({ files: [brownObject] })
     }
   }
   if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1))) {
@@ -277,4 +310,31 @@ export function report (message) {
   wordOneString += `\nThe average time between uses of ${process.env.WORD1} is ${averageTimeString}`
   reportEmbed.addField(process.env.WORD1, wordOneString)
   message.channel.send({ embeds: [reportEmbed] })
+}
+
+export function addLink(message, args, mode) {
+  const objectsToUpdate = selectMode(mode)
+  console.log(objectsToUpdate.file)
+  console.log(objectsToUpdate.object)
+  let duplicateFound = false
+  for (const link of brownLinks) {
+    if (link == [args[0]]) {
+      console.log(`Duplicate entry found: ${link} VS ${args[0]}`)
+      duplicateFound = true
+    }
+  }
+  if (args[0].toLowerCase().match(/^http/) && !duplicateFound) {
+    try {
+      appendFileSync(objectsToUpdate.file, `\n${args[0]}`, 'UTF-8')
+      objectsToUpdate.object.push(args[0])
+      message.channel.send('Link successfully added!')
+    } catch (err) {
+      console.error(err)
+    }
+  } else if (duplicateFound) {
+    message.channel.send('This link is already in the list.  HIJO DE PUTA')
+  } else {
+    console.log('Link is not valid')
+    message.channel.send(`${args[0]} is not a valid link.`)
+  }
 }
