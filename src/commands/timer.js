@@ -50,8 +50,6 @@ async function monday (channel) {
   for (const message of mondayList) {
     sendMessage(channel, message)
   }
-  // Sends Chainsaw Tuesday to anime channel
-  sendMessage(process.env.SERVER_OCB_ANIME, 'https://twitter.com/psicochurroz/status/1579916109666725888')
 }
 
 async function tuesday (channel) {
@@ -62,6 +60,8 @@ async function tuesday (channel) {
   for (const message of tuesdayList) {
     sendMessage(channel, message)
   }
+  // Sends Chainsaw Tuesday to anime channel
+  sendMessage(process.env.SERVER_OCB_ANIME, 'https://twitter.com/psicochurroz/status/1579916109666725888')
 }
 
 async function wednesday (channel) {
