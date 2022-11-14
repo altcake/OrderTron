@@ -82,6 +82,7 @@ async function thursday (channel) {
   thursdayList.push(TweetLink1)
   thursdayList.push(TweetLink2)
   client.channels.cache.get(channel).send({ files: [thursdayPotato] })
+  client.channels.cache.get(channel).send('https://www.youtube.com/shorts/XMqb-LWk0tc')
   for (const message of thursdayList) {
     sendMessage(channel, message)
   }

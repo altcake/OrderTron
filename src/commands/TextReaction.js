@@ -43,9 +43,12 @@ const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_ch
 const badmanCheck = new MessageAttachment(`${contentDir}/images/badman_check.png`)
 const chaosCheck = new MessageAttachment(`${contentDir}/images/chaos_check.jpg`)
 const reboCheck = new MessageAttachment(`${contentDir}/images/rebo_check.jpg`)
+const spyCheck =  new MessageAttachment(`${contentDir}/images/spy_check.png`)
+const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy_reward.jpg`)
 
 let bottomCheckCounter = 0
 let brotherCheckCounter = 0
+let spyCheckCounter = 0
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -127,12 +130,11 @@ export function execute (message) {
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('white')) {
     console.log('Making the color')
     const number = Math.random()
-    if (number < 0.3) {
-      if (number < 0.1) {
-        message.channel.send({ files: [whoopsWhite] })
-      } else {
-        message.channel.send({ files: [white] })
-      }
+    console.log(`Generated number: ${number}`)
+    switch (true) {
+      case (number < 0.05): message.channel.send({ files: [whoopsWhite] }); break
+      case (number < 0.15): message.channel.send('https://tenor.com/view/rat-white-funny-kys-ikes-kids-gif-24925206'); break
+      case (number < 0.4): message.channel.send({ files: [white] }); break
     }
   }
   if (message.channel.guild.id === serverMap.OCB && message.content.toLowerCase().includes('suavemente')) {
@@ -161,6 +163,19 @@ export function execute (message) {
       bottomCheckCounter = 0
     }
   }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('spy check')) {
+    console.log('SPY CHECK')
+    spyCheckCounter += 1
+    message.channel.send({ files: [spyCheck] })
+    if (spyCheckCounter < 6) {
+      console.log(`Counter value: ${spyCheckCounter}`)
+      setTimeout(() => { spyCheckCounter = 0 }, 600000)
+    } else if (spyCheckCounter >= 6) {
+      console.log('SUFFICIENT SPY SUPPORT HAS BEEN REACHED')
+      message.channel.send({ files: [spyCheckSuccess] })
+      spyCheckCounter = 0
+    }
+  }
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('bottom check')) {
     console.log('BOTTOM CHECK')
     bottomCheckCounter += 1
@@ -186,6 +201,7 @@ export function execute (message) {
     console.log('REBO CHECK')
     message.channel.send({ files: [reboCheck] })
   }
+
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
     console.log('GOT DAMN')
     const number = Math.random()
