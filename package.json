@@ -1,6 +1,6 @@
 {
   "name": "ordertron",
-  "version": "2.10.8",
+  "version": "2.10.9",
   "description": "Restoring absolute tranquility",
   "type": "module",
   "main": "src/main.js",
@@ -22,11 +22,11 @@
     "twitter-api-v2": "^1.12.2"
   },
   "devDependencies": {
-    "corde": "^4.4.7",
-    "eslint": "^8.23.1",
+    "corde": "^4.8.0",
+    "eslint": "^8.29.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.1"
+    "eslint-plugin-promise": "^6.1.1"
   },
   "engines": {
     "node": ">=18.6.0"
