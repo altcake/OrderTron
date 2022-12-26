@@ -23,6 +23,7 @@ twitterUserMap.tuesdayOnly = '1544291583608201216'
 const mondayPreparedWeekTweet = 'https://twitter.com/pianta_/status/1422171069306265600'
 const mondayMisatoInstagram = 'https://www.instagram.com/p/CUVkg2yBJlg/'
 const mondayMisatoTwitter = 'https://twitter.com/Misato_Mondays/status/1442611071022338050'
+const mondayGoblin = 'https://twitter.com/gamebryoviews/status/1604810578358374400'
 
 const thursdayPotato = new MessageAttachment(`${contentDir}/images/timer/thursday/SPOILER_20210225_103521.jpg`)
 
@@ -47,6 +48,7 @@ async function monday (channel) {
   mondayList.push(mondayPreparedWeekTweet)
   mondayList.push(mondayMisatoInstagram)
   mondayList.push(mondayMisatoTwitter)
+  mondayList.push(mondayGoblin)
   for (const message of mondayList) {
     sendMessage(channel, message)
   }
