@@ -108,7 +108,7 @@ export function execute (message) {
   console.log('Activity from user: ' + message.member.displayName)
   console.log('Message received: ' + message.content)
 
-  if ((message.content.toLowerCase().match(/(?:^| )let'?s.* go/)) || message.content.toLowerCase().includes('lfg')) {
+  if ((message.content.toLowerCase().match(/(?:^| )let('|’)?s.* go/)) || message.content.toLowerCase().includes('lfg')) {
     console.log("LET'S GOOOOOOOO")
     const letsGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
     message.channel.send({ files: [letsGo] })
@@ -221,7 +221,7 @@ export function execute (message) {
       message.channel.send({ files: [brownObject] })
     }
   }
-  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1))) {
+  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1)) && !(message.content.toLowerCase().includes('cumbia'))) {
     let timeSinceLastUse = null
     console.log(`Test server: ${message.channel.guild.id}`)
     console.log(`Stored test server: ${serverMap.TEST}`)
