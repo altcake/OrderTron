@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  node_version: 18.12.1
+  node_version: 18.15.0
 
 jobs:
   buildAndTest:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18.12.1']
+        node-version: ['18.15.0']
     steps:
       - uses: actions/checkout@v3
       # Cache npm modules
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18.12.1']
+        node-version: ['18.15.0']
         appname: ['ordertron-codedeploy']
         deploy-group: ['prod']
         s3-bucket: ['ordertron-bucket']

@@ -221,7 +221,7 @@ export function execute (message) {
       message.channel.send({ files: [brownObject] })
     }
   }
-  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1)) && !(message.content.toLowerCase().includes('cumbia'))) {
+  if (message.content.toLowerCase().match(new RegExp(process.env.MATCH1)) && !(message.content.toLowerCase().includes('cumbia')) && !(message.content.toLowerCase().includes('cumberbatch'))) {
     let timeSinceLastUse = null
     console.log(`Test server: ${message.channel.guild.id}`)
     console.log(`Stored test server: ${serverMap.TEST}`)

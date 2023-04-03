@@ -2,13 +2,15 @@ import fs from 'fs'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 
 const brLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
-const ggLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
+const ggEddieLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
+const ggMayBridgetLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_bridget_may.png`
 const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
 function selectMode (mode) {
   switch (mode) {
     case 'br': return brLogoFile
-    case 'gg': return ggLogoFile
+    case 'gg': return ggEddieLogoFile
+    case 'ggbm': return ggMayBridgetLogoFile
     default: return brLogoFile
   }
 }
@@ -17,6 +19,7 @@ function calculatePosition (background, logoSize, mode) {
   switch (mode) {
     case 'br': return [(background.width / 2) - (logoSize / 2), background.height - (logoSize * (0.66))]
     case 'gg': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
+    case 'ggbm': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     default: return [(background.width / 2) - (logoSize / 2), background.height - (logoSize * (0.66))]
   }
 }
