@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-deploy:
-    name: CD Pipeline
+    name: CD/CD Pipeline
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,7 +23,6 @@ jobs:
         s3-bucket: ['ordertron-bucket']
         s3-filename: ['ordertron-codedeploy-${{ github.sha }}']
 
-    needs: buildAndTest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
