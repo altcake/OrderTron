@@ -26,6 +26,10 @@ jobs:
     needs: buildAndTest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       # Initialize Node.js
       - name: Install Node.js ${{ matrix.node-version }}
