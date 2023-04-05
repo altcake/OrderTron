@@ -4,6 +4,7 @@ import { createCanvas, loadImage } from '@napi-rs/canvas'
 const brLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
 const ggEddieLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
 const ggMayBridgetLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_bridget_may.png`
+const mjSoyLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soytheythems_small.png`
 const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
 function selectMode (mode) {
@@ -11,6 +12,7 @@ function selectMode (mode) {
     case 'br': return brLogoFile
     case 'gg': return ggEddieLogoFile
     case 'ggbm': return ggMayBridgetLogoFile
+    case 'mj' : return mjSoyLogoFile
     default: return brLogoFile
   }
 }
@@ -20,6 +22,7 @@ function calculatePosition (background, logoSize, mode) {
     case 'br': return [(background.width / 2) - (logoSize / 2), background.height - (logoSize * (0.66))]
     case 'gg': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     case 'ggbm': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
+    case 'mj': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     default: return [(background.width / 2) - (logoSize / 2), background.height - (logoSize * (0.66))]
   }
 }

@@ -47,6 +47,7 @@ client.on('messageCreate', message => {
       case 'brmerge': client.commands.get('merge').execute(message, args, 'br'); break
       case 'ggmerge': client.commands.get('merge').execute(message, args, 'gg'); break
       case 'ggbmmerge': client.commands.get('merge').execute(message, args, 'ggbm'); break
+      case 'mjmerge': client.commands.get('merge').execute(message, args, 'mj'); break
       case 'timer': client.commands.get('timer').execute(message, args); break
       case 'nick': client.commands.get('nick').execute(message, args); break
       case 'report': client.commands.get('TextReact').report(message); break
