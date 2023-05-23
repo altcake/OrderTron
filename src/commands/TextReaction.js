@@ -45,6 +45,7 @@ const chaosCheck = new MessageAttachment(`${contentDir}/images/chaos_check.jpg`)
 const reboCheck = new MessageAttachment(`${contentDir}/images/rebo_check.jpg`)
 const spyCheck =  new MessageAttachment(`${contentDir}/images/spy_check.png`)
 const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy_reward.jpg`)
+const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
 
 let bottomCheckCounter = 0
 let brotherCheckCounter = 0
@@ -201,6 +202,10 @@ export function execute (message) {
     console.log('REBO CHECK')
     message.channel.send({ files: [reboCheck] })
   }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('beans check')) {
+    console.log('BEANS CHECK')
+    message.channel.send({ files: [beansCheck] })
+  }
 
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
     console.log('GOT DAMN')
@@ -209,10 +214,10 @@ export function execute (message) {
       message.channel.send({ files: [gotDamn] })
     }
   }
-  if (message.content.toLowerCase().match(/i'?m gonna brown/)) {
+  if (message.channel.guild.id !== serverMap.DOP && (message.content.toLowerCase().match(/i'?m gonna brown/))) {
     console.log("I'M GONNA BROWN")
     message.channel.send('https://www.youtube.com/shorts/Kn-sfB5OSKg')
-  } else if (message.content.toLowerCase().includes('brown')) {
+  } else if (message.channel.guild.id !== serverMap.DOP && (message.content.toLowerCase().includes('brown'))) {
     console.log('BROWN')
     const brownObject = brownLinks[Math.floor(Math.random() * brownLinks.length)]
     if (brownObject.toLowerCase().match(/^http/)) {
