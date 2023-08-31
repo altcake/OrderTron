@@ -46,6 +46,10 @@ const reboCheck = new MessageAttachment(`${contentDir}/images/rebo_check.jpg`)
 const spyCheck =  new MessageAttachment(`${contentDir}/images/spy_check.png`)
 const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy_reward.jpg`)
 const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
+const ravenCheck = new MessageAttachment(`${contentDir}/images/raven_check.jpg`)
+const johnCheck = new MessageAttachment(`${contentDir}/images/john_check.png`)
+
+const johnPhrase = `${process.env.MATCH2} check`
 
 let bottomCheckCounter = 0
 let brotherCheckCounter = 0
@@ -205,6 +209,14 @@ export function execute (message) {
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('beans check')) {
     console.log('BEANS CHECK')
     message.channel.send({ files: [beansCheck] })
+  }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('raven check')) {
+    console.log('RAVEN CHECK')
+    message.channel.send({ files: [ravenCheck] })
+  }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().match(johnPhrase)) {
+    console.log('JOHN CHECK')
+    message.channel.send({ files: [johnCheck] })
   }
 
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
