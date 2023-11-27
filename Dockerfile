@@ -1,4 +1,4 @@
-FROM node:18.15.0-alpine
+FROM node:20.10.0-alpine
 LABEL maintainer="aramalayan@gmail.com"
 RUN apk add --no-cache \
     gcompat
