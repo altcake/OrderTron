@@ -5,6 +5,7 @@ const brLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
 const ggEddieLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
 const ggMayBridgetLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_bridget_may.png`
 const mjSoyLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soytheythems_small.png`
+const buckLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/buck.png`
 const mergeWorkingDir = `${process.env.CONTENT_DIR}/images/image-merge/results`
 
 function selectMode (mode) {
@@ -13,6 +14,7 @@ function selectMode (mode) {
     case 'gg': return ggEddieLogoFile
     case 'ggbm': return ggMayBridgetLogoFile
     case 'mj' : return mjSoyLogoFile
+    case 'buck': return buckLogoFile
     default: return brLogoFile
   }
 }
@@ -23,6 +25,7 @@ function calculatePosition (background, logoSize, mode) {
     case 'gg': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     case 'ggbm': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     case 'mj': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
+    case 'buck': return [(background.width / 2) - (logoSize / 2), background.height - logoSize]
     default: return [(background.width / 2) - (logoSize / 2), background.height - (logoSize * (0.66))]
   }
 }
