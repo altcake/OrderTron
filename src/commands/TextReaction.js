@@ -48,8 +48,11 @@ const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy
 const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
 const ravenCheck = new MessageAttachment(`${contentDir}/images/raven_check.jpg`)
 const johnCheck = new MessageAttachment(`${contentDir}/images/john_check.png`)
+const happyImage = new MessageAttachment(`${contentDir}/images/happy.jpg`)
+
 
 const johnPhrase = `${process.env.MATCH2} check`
+const happyPhrase = `${process.env.MATCH3}`
 
 let bottomCheckCounter = 0
 let brotherCheckCounter = 0
@@ -217,6 +220,10 @@ export function execute (message) {
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().match(johnPhrase)) {
     console.log('JOHN CHECK')
     message.channel.send({ files: [johnCheck] })
+  }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().match(happyPhrase)) {
+    console.log('HAPPY CHECK')
+    message.channel.send({ files: [happyImage] })
   }
 
   if ((message.content.toLowerCase().includes('got') || message.content.toLowerCase().includes('god')) && message.content.toLowerCase().includes('damn')) {
