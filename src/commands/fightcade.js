@@ -4,21 +4,18 @@ import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
 
 const contentDir = process.env.CONTENT_DIR
 
-//console.log('fightcase.js: Reading FC user data')
-
-// const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
-// console.log(`Attempting to read file: ${fcUsersLocation}`)
-// import fcJson from fcUsersLocation assert {type: 'json'}
-// let fcUsers = JSON.parse(fcJson)
-// try {
-//   accessSync(fcUsersLocation)
-//   const fcUsersRawData = readFileSync(fcUsersLocation)
-//   fcUsers = JSON.parse(fcFile)
-//   console.log('FC user file read successfully')
-// } catch (err) {
-//   console.error('There was an issue reading the FC user file')
-//   console.error(err.message)
-// }
+let fcUsers = {}
+const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
+console.log(`Attempting to read file: ${fcUsersLocation}`)
+try {
+  accessSync(fcUsersLocation)
+  const fcUsersRaw = readFileSync(fcUsersLocation)
+  fcUsers = JSON.parse(fcUsersRaw)
+  console.log('FC user data read successfully')
+} catch (err) {
+  console.error('There was an issue reading the FC user data')
+  console.error(err.message)
+}
 
 async function getUser(username) {
   try {
@@ -35,18 +32,8 @@ async function getUser(username) {
 
 function register(discordId, discordUsername, fcUsername) {
   console.log(discordId)
-  // fcUsers[newUser].DiscordName = discordUsername
-  // fcUsers[newUser].FCUsername = fcUsername
-  const newUserData = {
-    discordId: {
-      'DiscordName': discordUsername,
-      'FCUsername': fcUsername
-    }
-  }
-  fcUsers.push(newUserData)
-  //fcUsers[discordId] = newUser
-  console.log(fcUsers[discordId])
-  console.log(fcUsers[discordId].DiscordName)
+  fcUsers[discordId] = {'DiscordName': discordUsername, 'FCUsername': fcUsername}
+  console.log(fcUsers.discordId)
   try {
     writeFileSync(fcUsersLocation, JSON.stringify(fcUsers))
     console.log('FC user file written successfully')
@@ -65,7 +52,7 @@ export function execute (message, args) {
   }
   else {
     let userId = message.author.id.toString()
-    console.log(userId)
+    console.log(`Searching for: ${userId}`)
     console.log(fcUsers[userId].FCUsername)
     getUser(fcUsers[userId].FCUsername)
   }
