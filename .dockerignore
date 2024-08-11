@@ -14,6 +14,7 @@
 **/content
 **/src/commands/training.js*
 **/src/commands/RemoteWake.js*
+**/src/commands/*.txt
 **/appspec.yml
 **/ecosystem.config.cjs
 **/.eslint.yml

@@ -15,12 +15,11 @@
     "@napi-rs/canvas": "^0.1.53",
     "discord.js": "^13.7.0",
     "dotenv": "^16.4.5",
-    "fightcade-api": "^3.0.2",
-    "node-fetch": "^3.3.2"
+    "fightcade-api": "^3.0.5"
   },
   "devDependencies": {
     "corde": "^4.8.0",
-    "eslint": "^9.6.0"
+    "eslint": "^9.8.0"
   },
   "engines": {
     "node": ">=20.10.0"
