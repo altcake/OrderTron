@@ -15,7 +15,7 @@
     "@napi-rs/canvas": "^0.1.53",
     "discord.js": "^13.7.0",
     "dotenv": "^16.4.5",
-    "fightcade-api": "file:packages/fightcade-api"
+    "fightcade-api": "file:custom-packages/fightcade-api"
   },
   "devDependencies": {
     "corde": "^4.8.0",

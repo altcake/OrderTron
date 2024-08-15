@@ -4,7 +4,7 @@ RUN apk add --no-cache \
     gcompat
 WORKDIR /ordertron
 COPY package* ./
-RUN npm ci --production && \
+RUN npm ci --omit=dev && \
     npm cache clean --force
 COPY ./ ./
 ENTRYPOINT ["node", "src/main.js"]
