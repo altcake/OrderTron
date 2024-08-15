@@ -19,3 +19,4 @@
 **/ecosystem.config.cjs
 **/.eslint.yml
 **/corde.config.json
+**/package-lock.json
