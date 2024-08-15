@@ -26,7 +26,7 @@ export function execute (message) {
       const rawModifier = rollNumbers.split('+')
       modifier = rawModifier[1]
       rollNumbers = rawModifier[0]
-      result.addField('Modifier', modifier)
+      result.addFields({ name: 'Modifier', value: modifier })
       rollSum += parseInt(modifier)
     }
     if (/^\d+d\d+/.test(rollNumbers)) {
@@ -34,16 +34,16 @@ export function execute (message) {
       console.log('Raw Numbers: ' + rawNumbers)
       if (rawNumbers[0] > 350) {
         console.log('Requested roll was too high: ' + rawNumbers[0])
-        result.addField(rollRequest, "Discord doesn't like rolls this high, so try something smaller.")
+        result.addFields({ name: rollRequest, value: "Discord doesn't like rolls this high, so try something smaller." })
       } else {
         for (let roll = 0; roll < rawNumbers[0]; roll++) {
           const rolledNumber = rollDice(rawNumbers[1])
           rollResult = rollResult + (rolledNumber + '\n')
           rollSum += rolledNumber
         }
-        result.addField(rollNumbers, rollResult.toString())
+        result.addFields({ name: rollNumbers, value: rollResult.toString() })
         if (modifier > 0 || rawNumbers[0] > 1) {
-          result.addField('Total:', rollSum.toString())
+          result.addFields({ name: 'Total:', value: rollSum.toString() })
         }
       }
     } else if (/d\d+/.test(rollNumbers)) {
@@ -52,12 +52,12 @@ export function execute (message) {
       rollSum += parseInt(rollResult)
       console.log(rollResult)
       console.log(rollSum)
-      result.addField(rollNumbers, rollResult.toString())
+      result.addFields({ name: rollNumbers, value: rollResult.toString() })
       if (rollSum > rollResult) {
-        result.addField('Total: ', rollSum.toString())
+        result.addFields({ name: 'Total: ', value: rollSum.toString() })
       }
     } else {
-      result.addField(rollRequest, 'I have no idea what you just tried to do...')
+      result.addFields({ name: rollRequest, value: 'I have no idea what you just tried to do...' })
     }
   }
   // result = input + " roll result:\n" + rollResult

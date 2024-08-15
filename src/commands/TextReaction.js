@@ -47,6 +47,7 @@ const spyCheck =  new MessageAttachment(`${contentDir}/images/spy_check.png`)
 const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy_reward.jpg`)
 const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
 const ravenCheck = new MessageAttachment(`${contentDir}/images/raven_check.jpg`)
+const sisterCheck = new MessageAttachment(`${contentDir}/images/SPOILER_sister_check.jpg`)
 const johnCheck = new MessageAttachment(`${contentDir}/images/john_check.png`)
 const happyImage = new MessageAttachment(`${contentDir}/images/happy.jpg`)
 
@@ -217,6 +218,10 @@ export function execute (message) {
     console.log('RAVEN CHECK')
     message.channel.send({ files: [ravenCheck] })
   }
+  if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('sister check')) {
+    console.log('SISTER CHECK')
+    message.channel.send({ files: [sisterCheck] })
+  }
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().match(johnPhrase)) {
     console.log('JOHN CHECK')
     message.channel.send({ files: [johnCheck] })
@@ -325,8 +330,8 @@ export function execute (message) {
     const timeString = convert.convertToString(timeSinceLastUse)
     message.channel.send(`It has been ${timeString} since someone said ${process.env.WORD1}`)
     console.log('Slowpoke incoming')
-    // Set message delay between 10 minutes to 60 minutes
-    const delay = Math.floor(Math.random() * 3000000) + 600000
+    // Set message delay between 30 minutes to 360 minutes
+    const delay = Math.floor(Math.random() * 19800000) + 1800000
     console.log(`Message delay: ${delay / 60000} minutes`)
     setTimeout(() => { message.reply({ files: [slowpoke] }) }, delay)
   }
@@ -351,7 +356,7 @@ export function report (message) {
   wordOneString += `\nThe record for not saying ${process.env.WORD1} is ${longestTimeString}`
   wordOneString += `\n${process.env.WORD1} has been said ${timesUsed} times`
   wordOneString += `\nThe average time between uses of ${process.env.WORD1} is ${averageTimeString}`
-  reportEmbed.addField(process.env.WORD1, wordOneString)
+  reportEmbed.addFields({ name: process.env.WORD1, value: wordOneString })
   message.channel.send({ embeds: [reportEmbed] })
 }
 

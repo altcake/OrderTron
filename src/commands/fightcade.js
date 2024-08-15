@@ -4,6 +4,9 @@ import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
 
 const contentDir = process.env.CONTENT_DIR
 
+let game_map = new Map()
+game_map.set('sfiii3nr1', 'Street Fighter III: Third Strike')
+
 let fcUsers = {}
 const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
 console.log(`Attempting to read file: ${fcUsersLocation}`)
@@ -17,16 +20,27 @@ try {
   console.error(err.message)
 }
 
-async function getUser(username) {
+async function getUser(username, message) {
   try {
     const user = await Fightcade.GetUser(username)
+    const fcInfo = new MessageEmbed()
+      .setColor('#ff0000')
+      .setTitle(`Fightcade match data for ${username}`)
     for (const gameid in user.gameinfo) {
       if (user.gameinfo[gameid].rank) {
+        let gameName = gameid
+        if (game_map.get(gameid) !== undefined) {
+          console.log(`Game name known: ${game_map.get(gameid)}`)
+          gameName = game_map.get(gameid)
+        }
         console.log(`${gameid}: ${user.gameinfo[gameid].num_matches}`)
+        fcInfo.addFields({name: gameName, value: user.gameinfo[gameid].num_matches.toString() })
       }
     }
+    message.channel.send({ embeds: [fcInfo] })
   } catch (error) {
-    console.log(e)
+    console.log(error)
+    message.channel.send('Something went wrong!')
   }
 }
 
@@ -54,6 +68,6 @@ export function execute (message, args) {
     let userId = message.author.id.toString()
     console.log(`Searching for: ${userId}`)
     console.log(fcUsers[userId].FCUsername)
-    getUser(fcUsers[userId].FCUsername)
+    getUser(fcUsers[userId].FCUsername, message)
   }
 }
