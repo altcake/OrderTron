@@ -1,11 +1,8 @@
-import * as Fightcade from 'fightcade-api'
+import { Fightcade } from 'fightcade-api'
 import { MessageAttachment, MessageEmbed } from 'discord.js'
 import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
 
 const contentDir = process.env.CONTENT_DIR
-
-let game_map = new Map()
-game_map.set('sfiii3nr1', 'Street Fighter III: Third Strike')
 
 let fcUsers = {}
 const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
@@ -26,15 +23,11 @@ async function getUser(username, message) {
     const fcInfo = new MessageEmbed()
       .setColor('#ff0000')
       .setTitle(`Fightcade match data for ${username}`)
-    for (const gameid in user.gameinfo) {
-      if (user.gameinfo[gameid].rank) {
-        let gameName = gameid
-        if (game_map.get(gameid) !== undefined) {
-          console.log(`Game name known: ${game_map.get(gameid)}`)
-          gameName = game_map.get(gameid)
-        }
-        console.log(`${gameid}: ${user.gameinfo[gameid].num_matches}`)
-        fcInfo.addFields({name: gameName, value: user.gameinfo[gameid].num_matches.toString() })
+    for (const gamestring in user.gameinfo) {
+      if (user.gameinfo[gamestring].rank) {
+        const game = await Fightcade.GetGame(gamestring)
+        console.log(`${gamestring}: ${user.gameinfo[gamestring].num_matches}`)
+        fcInfo.addFields({name: game.name, value: `Rank: ${user.gameinfo[gamestring].rank}\nNumber of matches: ${user.gameinfo[gamestring].num_matches.toString()}\nTime Played: ${user.gameinfo[gamestring].time_played}` })
       }
     }
     message.channel.send({ embeds: [fcInfo] })
