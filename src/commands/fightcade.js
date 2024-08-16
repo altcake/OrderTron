@@ -19,16 +19,17 @@ try {
 
 async function getUser(username, message) {
   try {
+    console.log(`Getting Fightcade data for ${username}`)
     const user = await Fightcade.GetUser(username)
+    console.log(user.gameinfo)
     const fcInfo = new MessageEmbed()
       .setColor('#ff0000')
       .setTitle(`Fightcade match data for ${username}`)
     for (const gamestring in user.gameinfo) {
-      if (user.gameinfo[gamestring].rank) {
-        const game = await Fightcade.GetGame(gamestring)
-        console.log(`${gamestring}: ${user.gameinfo[gamestring].num_matches}`)
-        fcInfo.addFields({name: game.name, value: `Rank: ${user.gameinfo[gamestring].rank}\nNumber of matches: ${user.gameinfo[gamestring].num_matches.toString()}\nTime Played: ${user.gameinfo[gamestring].time_played}` })
-      }
+      const game = await Fightcade.GetGame(gamestring)
+      console.log(`${gamestring}: ${user.gameinfo[gamestring].time_played}`)
+      let time_hours = (user.gameinfo[gamestring].time_played / 3600).toFixed(1)
+      fcInfo.addFields({name: game.name, value: `Time Played: ${time_hours} hours`})
     }
     message.channel.send({ embeds: [fcInfo] })
   } catch (error) {
@@ -38,7 +39,7 @@ async function getUser(username, message) {
 }
 
 function register(message, fcUsername) {
-  discordId = message.author.id
+  let discordId = message.author.id
   console.log(discordId)
   fcUsers[discordId] = {'DiscordName': message.author.username, 'FCUsername': fcUsername}
   console.log(fcUsers[discordId])
@@ -60,6 +61,12 @@ export function execute (message, args) {
   if (args[0] == 'register') {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)
     register(message, args[1])
+  }
+  else if (args[0] == 'test') {
+    let userId = '511699683798810634'
+    console.log(`Searching for: ${userId}`)
+    console.log(fcUsers[userId].FCUsername)
+    getUser(fcUsers[userId].FCUsername, message)
   }
   else {
     let userId = message.author.id.toString()
