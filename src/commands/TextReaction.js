@@ -48,6 +48,7 @@ const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy
 const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
 const ravenCheck = new MessageAttachment(`${contentDir}/images/raven_check.jpg`)
 const sisterCheck = new MessageAttachment(`${contentDir}/images/SPOILER_sister_check.jpg`)
+const sisterCheckSuccess = new MessageAttachment(`${contentDir}/images/sister_check_reward.jpg`)
 const johnCheck = new MessageAttachment(`${contentDir}/images/john_check.png`)
 const happyImage = new MessageAttachment(`${contentDir}/images/happy.jpg`)
 
@@ -58,6 +59,7 @@ const happyPhrase = `${process.env.MATCH3}`
 let bottomCheckCounter = 0
 let brotherCheckCounter = 0
 let spyCheckCounter = 0
+let sisterCheckCounter = 0
 
 const letsGoList = readdirSync(`${contentDir}/images/lets_go/`)
 const letsGoFiles = []
@@ -165,7 +167,7 @@ export function execute (message) {
     message.channel.send({ files: [brotherCheck] })
     if (brotherCheckCounter < 6) {
       console.log(`Counter value: ${brotherCheckCounter}`)
-      setTimeout(() => { brotherCheckCounter = 0 }, 600000)
+      setTimeout(() => { brotherCheckCounter = 0 }, 1800000)
     } else if (brotherCheckCounter >= 6) {
       console.log('SUFFICIENT BROTHER SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [brotherCheckSuccess] })
@@ -178,7 +180,7 @@ export function execute (message) {
     message.channel.send({ files: [spyCheck] })
     if (spyCheckCounter < 6) {
       console.log(`Counter value: ${spyCheckCounter}`)
-      setTimeout(() => { spyCheckCounter = 0 }, 600000)
+      setTimeout(() => { spyCheckCounter = 0 }, 1800000)
     } else if (spyCheckCounter >= 6) {
       console.log('SUFFICIENT SPY SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [spyCheckSuccess] })
@@ -191,7 +193,7 @@ export function execute (message) {
     message.channel.send({ files: [bottomCheck] })
     if (bottomCheckCounter < 6) {
       console.log(`Counter value: ${bottomCheckCounter}`)
-      setTimeout(() => { bottomCheckCounter = 0 }, 600000)
+      setTimeout(() => { bottomCheckCounter = 0 }, 1800000)
     } else if (bottomCheckCounter >= 6) {
       console.log('SUFFICIENT BOTTOM SUPPORT HAS BEEN REACHED')
       message.channel.send({ files: [bottomCheckSuccess] })
@@ -221,6 +223,15 @@ export function execute (message) {
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('sister check')) {
     console.log('SISTER CHECK')
     message.channel.send({ files: [sisterCheck] })
+    sisterCheckCounter += 1
+    if (sisterCheckCounter < 6) {
+      console.log(`Counter value: ${sisterCheckCounter}`)
+      setTimeout(() => { sisterCheckCounter = 0 }, 1800000)
+    } else if (sisterCheckCounter >= 6) {
+      console.log('SUFFICIENT SISTER SUPPORT HAS BEEN REACHED')
+      message.channel.send({ files: [sisterCheckSuccess] })
+      sisterCheckCounter = 0
+    }
   }
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().match(johnPhrase)) {
     console.log('JOHN CHECK')
