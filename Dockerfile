@@ -4,6 +4,7 @@ RUN apk add --no-cache \
     gcompat
 WORKDIR /ordertron
 COPY ./ ./
-RUN yarn install --production && \
-    yarn cache clean --force
+RUN npm install --omit=dev && \
+    npm cache clean --force && \
+    unzip fightcade-api.zip node_modules
 ENTRYPOINT ["node", "src/main.js"]
