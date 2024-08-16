@@ -5,6 +5,5 @@ RUN apk add --no-cache \
 WORKDIR /ordertron
 COPY ./ ./
 RUN npm install --omit=dev && \
-    npm cache clean --force && \
-    unzip fightcade-api.zip node_modules
+    npm cache clean --force
 ENTRYPOINT ["node", "src/main.js"]
