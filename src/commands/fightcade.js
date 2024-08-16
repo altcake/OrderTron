@@ -9,7 +9,7 @@ const fcUsersLocation = `${contentDir}/fc_data/${process.env.FCUSERFILE}`
 console.log(`Attempting to read file: ${fcUsersLocation}`)
 try {
   accessSync(fcUsersLocation)
-  const fcUsersRaw = readFileSync(fcUsersLocation)
+  const fcUsersRaw = readFileSync(fcUsersLocation, 'utf-8')
   fcUsers = JSON.parse(fcUsersRaw)
   console.log('FC user data read successfully')
 } catch (err) {
@@ -37,16 +37,20 @@ async function getUser(username, message) {
   }
 }
 
-function register(discordId, discordUsername, fcUsername) {
+function register(message, fcUsername) {
+  discordId = message.author.id
   console.log(discordId)
-  fcUsers[discordId] = {'DiscordName': discordUsername, 'FCUsername': fcUsername}
-  console.log(fcUsers.discordId)
+  fcUsers[discordId] = {'DiscordName': message.author.username, 'FCUsername': fcUsername}
+  console.log(fcUsers[discordId])
   try {
-    writeFileSync(fcUsersLocation, JSON.stringify(fcUsers))
+    accessSync(fcUsersLocation)
+    writeFileSync(fcUsersLocation, JSON.stringify(fcUsers), 'utf-8')
     console.log('FC user file written successfully')
+    message.channel.send('Registration successful!')
   } catch (err) {
-    console.error('There was an issue reading the FC user file')
+    console.error('There was an issue writing the FC user file')
     console.error(err.message)
+    message.channel.send('There was an issue registering your username!!')
   }
 }
 
@@ -55,7 +59,7 @@ export const description = 'Climb the tower in old games'
 export function execute (message, args) {
   if (args[0] == 'register') {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)
-    register(message.author.id, message.author.username, args[1])
+    register(message, args[1])
   }
   else {
     let userId = message.author.id.toString()
