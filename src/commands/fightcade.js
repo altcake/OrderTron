@@ -62,12 +62,6 @@ export function execute (message, args) {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)
     register(message, args[1])
   }
-  else if (args[0] == 'test') {
-    let userId = '511699683798810634'
-    console.log(`Searching for: ${userId}`)
-    console.log(fcUsers[userId].FCUsername)
-    getUser(fcUsers[userId].FCUsername, message)
-  }
   else {
     let userId = message.author.id.toString()
     console.log(`Searching for: ${userId}`)
