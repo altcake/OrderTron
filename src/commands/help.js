@@ -21,6 +21,8 @@ export function execute (message, args) {
       { name: '~mjmerge', value: 'Starring people whose names start with M and J' },
       { name: '~buckmerge', value: 'Wow, you nasty (FromSoft Edition)' },
       { name: 'Fightcade Commands', value: 'Ways to interact with the Fightcade API (Requires initial setup)' },
-      { name: '~fightcade register <fightcade_username>', value: 'Input your Fightcade user ID before executing other commands. Only needs to be done the first time you use the Fightcade functions' })
+      { name: '~fightcade register <fightcade_username>', value: 'Input your Fightcade user ID before executing other commands. Only needs to be done the first time you use the Fightcade functions' },
+      { name: '~fightcade user <fightcade_username>', value: 'Returns player data for any Fightcade user. Can be done without registration.' },
+      { name: '~fightcade', value: 'Return player data for yourself. Requires registration.' })
   message.member.send({ embeds: [printHelp] })
 }

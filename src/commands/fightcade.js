@@ -17,21 +17,37 @@ try {
   console.error(err.message)
 }
 
-async function getUser(username, message) {
+async function getUser(message, username) {
   try {
     console.log(`Getting Fightcade data for ${username}`)
     const user = await Fightcade.GetUser(username)
     console.log(user.gameinfo)
-    const fcInfo = new MessageEmbed()
+    let fcInfo = new MessageEmbed()
       .setColor('#ff0000')
       .setTitle(`Fightcade match data for ${username}`)
     for (const gamestring in user.gameinfo) {
-      const game = await Fightcade.GetGame(gamestring)
-      console.log(`${gamestring}: ${user.gameinfo[gamestring].time_played}`)
+      console.log(`Getting name of ${gamestring}`)
+      let game_name = gamestring
+      try {
+        const game = await Fightcade.GetGame(gamestring)
+        game_name = game.name
+      } catch (error) {
+        console.log(`Couldn't get name for ${gamestring}`)
+      }
       let time_hours = (user.gameinfo[gamestring].time_played / 3600).toFixed(1)
-      fcInfo.addFields({name: game.name, value: `Time Played: ${time_hours} hours`})
+      // Discord embed field limit is 25. Ensure that MessageEmbeds stay below that limit
+      if (fcInfo.fields.length < 25) {
+        fcInfo.addFields({name: game_name, value: `Time Played: ${time_hours} hours`})
+      }
+      else {
+        console.log("MessageEmbed field limit reached. Sending message and creating new embed")
+        message.channel.send( { embeds: [fcInfo] })
+        fcInfo = new MessageEmbed()
+          .setColor('#ff0000')
+          .setTitle(`Fightcade match data for ${username} cont.`)
+      }
     }
-    message.channel.send({ embeds: [fcInfo] })
+    message.channel.send( { embeds: [fcInfo] })
   } catch (error) {
     console.log(error)
     message.channel.send('Something went wrong!')
@@ -62,10 +78,14 @@ export function execute (message, args) {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)
     register(message, args[1])
   }
+  else if (args[0] == 'user') {
+    console.log(`Getting info for ${args[1]}`)
+    getUser(message, args[1])
+  }
   else {
     let userId = message.author.id.toString()
     console.log(`Searching for: ${userId}`)
     console.log(fcUsers[userId].FCUsername)
-    getUser(fcUsers[userId].FCUsername, message)
+    getUser(message, fcUsers[userId].FCUsername)
   }
 }
