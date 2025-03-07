@@ -12,6 +12,7 @@
 **/.aws
 **/dist
 **/content
+**/archive
 **/src/commands/training.js*
 **/src/commands/RemoteWake.js*
 **/src/commands/*.txt
