@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
+import { SlashCommandBuilder } from 'discord.js'
 
 const brLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/logo.png`
 const ggEddieLogoFile = `${process.env.CONTENT_DIR}/images/image-merge/soy_eddie.png`
@@ -60,8 +61,10 @@ async function mergeImages (image, logoFile, mode) {
   return outputFilePath
 }
 
-export const name = 'merge'
-export const description = 'This is gonna get real old real fast'
+export const data = new SlashCommandBuilder()
+  .setName('merge')
+  .setDescription('This is gonna get real old real fast')
+
 export async function execute (message, args, mode) {
   const logoFile = selectMode(mode)
   const imageCollection = message.attachments

@@ -1,6 +1,6 @@
 import { Fightcade } from 'fightcade-api'
-import { MessageAttachment, MessageEmbed } from 'discord.js'
-import { readdirSync, readFileSync, accessSync, writeFileSync } from 'fs'
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { readFileSync, accessSync, writeFileSync } from 'fs'
 
 const contentDir = process.env.CONTENT_DIR
 
@@ -22,7 +22,7 @@ async function getUser(message, username) {
     console.log(`Getting Fightcade data for ${username}`)
     const user = await Fightcade.GetUser(username)
     console.log(user.gameinfo)
-    let fcInfo = new MessageEmbed()
+    let fcInfo = new EmbedBuilder()
       .setColor('#ff0000')
       .setTitle(`Fightcade match data for ${username}`)
     for (const gamestring in user.gameinfo) {
@@ -35,14 +35,14 @@ async function getUser(message, username) {
         console.log(`Couldn't get name for ${gamestring}`)
       }
       let time_hours = (user.gameinfo[gamestring].time_played / 3600).toFixed(1)
-      // Discord embed field limit is 25. Ensure that MessageEmbeds stay below that limit
+      // Discord embed field limit is 25. Ensure that EmbedBuilders stay below that limit
       if (fcInfo.fields.length < 25) {
         fcInfo.addFields({name: game_name, value: `Time Played: ${time_hours} hours`})
       }
       else {
-        console.log("MessageEmbed field limit reached. Sending message and creating new embed")
+        console.log("EmbedBuilder field limit reached. Sending message and creating new embed")
         message.channel.send( { embeds: [fcInfo] })
-        fcInfo = new MessageEmbed()
+        fcInfo = new EmbedBuilder()
           .setColor('#ff0000')
           .setTitle(`Fightcade match data for ${username} cont.`)
       }
@@ -70,9 +70,10 @@ function register(message, fcUsername) {
     message.channel.send('There was an issue registering your username!!')
   }
 }
+export const data = new SlashCommandBuilder()
+  .setName('fightcade')
+  .setDescription('Climb the tower in old games')
 
-export const name = 'fightcade'
-export const description = 'Climb the tower in old games'
 export function execute (message, args) {
   if (args[0] == 'register') {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)

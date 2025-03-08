@@ -6,5 +6,5 @@ npm-debug.log
 content
 .vscode
 src/commands/training.js*
-src/commands/RemoteWake.js*
+archive/RemoteWake.js*
 corde.config.json

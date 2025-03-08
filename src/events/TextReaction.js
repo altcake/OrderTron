@@ -1,4 +1,4 @@
-import { MessageAttachment, MessageEmbed } from 'discord.js'
+import { AttachmentBuilder, EmbedBuilder } from 'discord.js'
 import { readdirSync, readFileSync, accessSync, writeFileSync, appendFileSync } from 'fs'
 import * as convert from '../lib/DateConvert.js'
 
@@ -30,27 +30,27 @@ try {
   console.error(err.message)
 }
 
-const bigOof = new MessageAttachment(`${contentDir}/images/oof.jpg`)
-const white = new MessageAttachment(`${contentDir}/images/white.jpg`)
-const suavemente = new MessageAttachment(`${contentDir}/images/suavemente.jpg`)
-const whoopsWhite = new MessageAttachment(`${contentDir}/images/whoops_white.jpg`)
-const brotherCheck = new MessageAttachment(`${contentDir}/images/SPOILER_brother.jpg`)
-const brotherCheckSuccess = new MessageAttachment(`${contentDir}/images/SPOILER_brother_reward.jpg`)
-const gotDamn = new MessageAttachment(`${contentDir}/images/damn.jpg`)
-const slowpoke = new MessageAttachment(`${contentDir}/images/slowpoke.jpg`)
-const bottomCheck = new MessageAttachment(`${contentDir}/images/bottom_check.png`)
-const bottomCheckSuccess = new MessageAttachment(`${contentDir}/images/bottom_check_success.jpg`)
-const badmanCheck = new MessageAttachment(`${contentDir}/images/badman_check.png`)
-const chaosCheck = new MessageAttachment(`${contentDir}/images/chaos_check.jpg`)
-const reboCheck = new MessageAttachment(`${contentDir}/images/rebo_check.jpg`)
-const spyCheck =  new MessageAttachment(`${contentDir}/images/spy_check.png`)
-const spyCheckSuccess =  new MessageAttachment(`${contentDir}/images/SPOILER_spy_reward.jpg`)
-const beansCheck = new MessageAttachment(`${contentDir}/images/beans_check.png`)
-const ravenCheck = new MessageAttachment(`${contentDir}/images/raven_check.jpg`)
-const sisterCheck = new MessageAttachment(`${contentDir}/images/SPOILER_sister_check.jpg`)
-const sisterCheckSuccess = new MessageAttachment(`${contentDir}/images/sister_check_reward.jpg`)
-const johnCheck = new MessageAttachment(`${contentDir}/images/john_check.png`)
-const happyImage = new MessageAttachment(`${contentDir}/images/happy.jpg`)
+const bigOof = new AttachmentBuilder(`${contentDir}/images/oof.jpg`)
+const white = new AttachmentBuilder(`${contentDir}/images/white.jpg`)
+const suavemente = new AttachmentBuilder(`${contentDir}/images/suavemente.jpg`)
+const whoopsWhite = new AttachmentBuilder(`${contentDir}/images/whoops_white.jpg`)
+const brotherCheck = new AttachmentBuilder(`${contentDir}/images/SPOILER_brother.jpg`)
+const brotherCheckSuccess = new AttachmentBuilder(`${contentDir}/images/SPOILER_brother_reward.jpg`)
+const gotDamn = new AttachmentBuilder(`${contentDir}/images/damn.jpg`)
+const slowpoke = new AttachmentBuilder(`${contentDir}/images/slowpoke.jpg`)
+const bottomCheck = new AttachmentBuilder(`${contentDir}/images/bottom_check.png`)
+const bottomCheckSuccess = new AttachmentBuilder(`${contentDir}/images/bottom_check_success.jpg`)
+const badmanCheck = new AttachmentBuilder(`${contentDir}/images/badman_check.png`)
+const chaosCheck = new AttachmentBuilder(`${contentDir}/images/chaos_check.jpg`)
+const reboCheck = new AttachmentBuilder(`${contentDir}/images/rebo_check.jpg`)
+const spyCheck =  new AttachmentBuilder(`${contentDir}/images/spy_check.png`)
+const spyCheckSuccess =  new AttachmentBuilder(`${contentDir}/images/SPOILER_spy_reward.jpg`)
+const beansCheck = new AttachmentBuilder(`${contentDir}/images/beans_check.png`)
+const ravenCheck = new AttachmentBuilder(`${contentDir}/images/raven_check.jpg`)
+const sisterCheck = new AttachmentBuilder(`${contentDir}/images/SPOILER_sister_check.jpg`)
+const sisterCheckSuccess = new AttachmentBuilder(`${contentDir}/images/sister_check_reward.jpg`)
+const johnCheck = new AttachmentBuilder(`${contentDir}/images/john_check.png`)
+const happyImage = new AttachmentBuilder(`${contentDir}/images/happy.jpg`)
 
 
 const johnPhrase = `${process.env.MATCH2} check`
@@ -121,17 +121,17 @@ export function execute (message) {
 
   if ((message.content.toLowerCase().match(/(?:^| )let('|’)?s.* go/)) || message.content.toLowerCase().includes('lfg')) {
     console.log("LET'S GOOOOOOOO")
-    const letsGo = new MessageAttachment(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
+    const letsGo = new AttachmentBuilder(letsGoFiles[Math.floor(Math.random() * letsGoFiles.length)])
     message.channel.send({ files: [letsGo] })
   }
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('booba')) {
     console.log('BOOBA')
-    const booba = new MessageAttachment(boobaFiles[Math.floor(Math.random() * boobaFiles.length)])
+    const booba = new AttachmentBuilder(boobaFiles[Math.floor(Math.random() * boobaFiles.length)])
     message.channel.send({ files: [booba] })
   }
   if (message.channel.guild.id !== serverMap.DOP && ((message.content.toLowerCase().includes('spyro') || message.content.toLowerCase().includes('subway')) || (message.content.toLowerCase().match(/(?:^| )eat/) && message.content.toLowerCase().includes('fresh')))) {
     console.log('SPYRO')
-    const spyro = new MessageAttachment(spyroFiles[Math.floor(Math.random() * spyroFiles.length)])
+    const spyro = new AttachmentBuilder(spyroFiles[Math.floor(Math.random() * spyroFiles.length)])
     message.channel.send({ files: [spyro] })
   }
   if ((message.content.toLowerCase().match(/^oof/) || message.content.toLowerCase().match(/\s+oof/))) {
@@ -158,7 +158,7 @@ export function execute (message) {
   }
   if (message.channel.guild.id !== serverMap.DOP && (message.content.toLowerCase().includes('stonks'))) {
     console.log('STONKS')
-    const stonks = new MessageAttachment(stonksFiles[Math.floor(Math.random() * stonksFiles.length)])
+    const stonks = new AttachmentBuilder(stonksFiles[Math.floor(Math.random() * stonksFiles.length)])
     message.channel.send({ files: [stonks] })
   }
   if (message.channel.guild.id !== serverMap.DOP && message.content.toLowerCase().includes('brother check')) {
@@ -360,7 +360,7 @@ export function report (message) {
   const timesUsed = wordData[serverId].WORDONECOUNT
   const averageTime = (currentTime - process.env.WORD1STARTDATE) / timesUsed
   const averageTimeString = convert.convertToString(averageTime)
-  const reportEmbed = new MessageEmbed()
+  const reportEmbed = new EmbedBuilder()
     .setColor('#ff0000')
     .setTitle(`Metrics for ${message.channel.guild.name}`)
   let wordOneString = `It has been ${lastUsedString} since someone said ${process.env.WORD1}`
