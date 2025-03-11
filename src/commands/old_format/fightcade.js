@@ -1,5 +1,5 @@
 import { Fightcade } from 'fightcade-api'
-import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 import { readFileSync, accessSync, writeFileSync } from 'fs'
 
 const contentDir = process.env.CONTENT_DIR
@@ -70,10 +70,9 @@ function register(message, fcUsername) {
     message.channel.send('There was an issue registering your username!!')
   }
 }
-export const data = new SlashCommandBuilder()
-  .setName('fightcade')
-  .setDescription('Climb the tower in old games')
 
+export const name = 'fightcade'
+export const description = 'Climb the tower in old games'
 export function execute (message, args) {
   if (args[0] == 'register') {
     console.log(`Registering new user:\nID = ${message.author.id}\nDiscord Username = ${message.author.username}\nFC Username = ${args[1]}`)

@@ -12,11 +12,11 @@ const client = new Client({ intents: [
                                     GatewayIntentBits.MessageContent]})
 client.commands = new Collection()
 
-const commandFiles = readdirSync('./src/commands/').filter(file => file.endsWith('.js'))
-for (const file of commandFiles) {
-  import(`./commands/${file}`)
+const slashCommandFiles = readdirSync('./src/commands/slash_commands').filter(file => file.endsWith('.js'))
+for (const file of slashCommandFiles) {
+  import(`./commands/slash_commands/${file}`)
   .then(command => {
-    console.log(`Command detected: ${command.data.name}`)
+    console.log(`Slash command detected: ${command.data.name}`)
     client.commands.set(command.data.name, command)
   })
   .catch(error => {
@@ -24,11 +24,11 @@ for (const file of commandFiles) {
   })
 }
 
-const eventFiles = readdirSync('./src/events/').filter(file => file.endsWith('.js'))
-for (const file of eventFiles) {
-  import(`./events/${file}`)
+const oldCommandFiles = readdirSync('./src/commands/old_format').filter(file => file.endsWith('.js'))
+for (const file of oldCommandFiles) {
+  import(`./commands/old_format/${file}`)
   .then(command => {
-    console.log(`Command detected: ${command.name}`)
+    console.log(`Old command detected: ${command.name}`)
     client.commands.set(command.name, command)
   })
   .catch(error => {

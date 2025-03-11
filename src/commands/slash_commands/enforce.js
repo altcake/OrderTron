@@ -4,8 +4,8 @@ export const data = new SlashCommandBuilder()
   .setName('enforce')
   .setDescription('Justice will be served!')
 
-export function execute (message, args) {
+export async function execute (interaction) {
   console.log('ENFORCING NOW')
   const enforceAttachment = new AttachmentBuilder('https://media.giphy.com/media/O3Towk20Ty704/source.gif')
-  message.channel.send({ content: 'LAWWWWWWW!!!!!', files: [enforceAttachment] })
+  await interaction.reply({ content: 'LAWWWWWWW!!!!!', files: [enforceAttachment] })
 }

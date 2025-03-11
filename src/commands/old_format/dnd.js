@@ -1,4 +1,4 @@
-import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 
 function rollDice (sides) {
   const destiny = Math.floor(Math.random() * (sides)) + 1
@@ -6,10 +6,8 @@ function rollDice (sides) {
   return destiny
 }
 
-export const data = new SlashCommandBuilder()
-  .setName('dnd')
-  .setDescription('Roll the destiny dice')
-
+export const name = 'dnd'
+export const description = 'Roll the destiny dice'
 export function execute (message) {
   const input = message.content.split(' ')
   console.log('ROLLS REQUESTED: ' + input)
